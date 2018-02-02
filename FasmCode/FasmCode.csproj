@@ -33,12 +33,17 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Logo.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="ICSharpCode.AvalonEdit, Version=5.0.3.0, Culture=neutral, PublicKeyToken=9cc39be672370310, processorArchitecture=MSIL">
       <HintPath>..\packages\AvalonEdit.5.0.4\lib\Net40\ICSharpCode.AvalonEdit.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -57,10 +62,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="AboutWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="AboutWindow.xaml.cs">
+      <DependentUpon>AboutWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -96,6 +108,40 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Redo.png" />
+    <Resource Include="Icons\Undo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Close.png" />
+    <Resource Include="Icons\Compile.png" />
+    <Resource Include="Icons\Copy.png" />
+    <Resource Include="Icons\Cut.png" />
+    <Resource Include="Icons\Delete.png" />
+    <Resource Include="Icons\Exit.png" />
+    <Resource Include="Icons\Folder.png" />
+    <Resource Include="Icons\New.png" />
+    <Resource Include="Icons\Options.png" />
+    <Resource Include="Icons\Paste.png" />
+    <Resource Include="Icons\Run.png" />
+    <Resource Include="Icons\Save.png" />
+    <Resource Include="Icons\SaveAll.png" />
+    <Resource Include="Icons\SaveAs.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Find.png" />
+    <Resource Include="Icons\Help.png" />
+    <Resource Include="Icons\Info.png" />
+    <Resource Include="Icons\Replace.png" />
+    <Resource Include="Icons\SelectAll.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Calc.png" />
+    <Resource Include="Icons\Terminal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Logo.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

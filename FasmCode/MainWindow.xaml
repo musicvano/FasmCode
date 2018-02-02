@@ -5,28 +5,180 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FasmCode"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="Fasm Code" Height="350" Width="525">
     <DockPanel>
         <Menu DockPanel.Dock="Top">
-            <MenuItem Header="File">
-                <MenuItem Header="New..."></MenuItem>
-                <MenuItem Header="Save"></MenuItem>
+            <MenuItem Header="_File">
+                <MenuItem Header="_New File...">
+                    <MenuItem.Icon>
+                        <Image Source="Icons/New.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Open...">
+                    <MenuItem.Icon>
+                        <Image Source="Icons/Folder.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Save">
+                    <MenuItem.Icon>
+                        <Image Source="Icons/Save.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Save _As...">
+                    <MenuItem.Icon>
+                        <Image Source="Icons/SaveAs.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Save A_ll">
+                    <MenuItem.Icon>
+                        <Image Source="Icons/SaveAll.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Close">
+                </MenuItem>
+                <MenuItem Header="Close _Project">
+                    <MenuItem.Icon>
+                        <Image Source="Icons/Close.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
                 <Separator/>
-                <MenuItem Header="Exit"></MenuItem>
+                <MenuItem Header="E_xit">
+                    <MenuItem.Icon>
+                        <Image Source="Icons/Exit.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
-            <MenuItem Header="Edit">
-                <MenuItem Header="Cut"></MenuItem>
-                <MenuItem Header="Copy"></MenuItem>
-                <MenuItem Header="Paste"></MenuItem>
-                <MenuItem Header="Delete"></MenuItem>
+            
+            <MenuItem Header="_Edit">
+                <MenuItem Header="_Undo">
+                    <MenuItem.Icon>
+                        <Image Source="Icons/Undo.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Redo">
+                    <MenuItem.Icon>
+                        <Image Source="Icons/Redo.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator/>
+                <MenuItem Header="Cu_t">
+                    <MenuItem.Icon>
+                        <Image Source="Icons/Cut.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Copy">
+                    <MenuItem.Icon>
+                        <Image Source="Icons/Copy.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Paste">
+                    <MenuItem.Icon>
+                        <Image Source="Icons/Paste.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Delete">
+                    <MenuItem.Icon>
+                        <Image Source="Icons/Delete.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator/>
+                <MenuItem Header="Select _All">
+                    <MenuItem.Icon>
+                        <Image Source="Icons/SelectAll.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator/>
+                <MenuItem Header="_Find">
+                    <MenuItem.Icon>
+                        <Image Source="Icons/Find.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Replace">
+                    <MenuItem.Icon>
+                        <Image Source="Icons/Replace.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
-            <MenuItem Header="Help">
-                <MenuItem Header="About"></MenuItem>
+            
+            <MenuItem Header="_Build">
+                <MenuItem Header="_Compile">
+                    <MenuItem.Icon>
+                        <Image Source="Icons/Compile.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Run">
+                    <MenuItem.Icon>
+                        <Image Source="Icons/Run.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="_Tools">
+                <MenuItem Header="_Terminal...">
+                    <MenuItem.Icon>
+                        <Image Source="Icons/Terminal.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Calculator...">
+                    <MenuItem.Icon>
+                        <Image Source="Icons/Calc.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator/>
+                <MenuItem Header="_Options...">
+                    <MenuItem.Icon>
+                        <Image Source="Icons/Options.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            
+            <MenuItem Header="_Help">
+                <MenuItem Header="_Help">
+                    <MenuItem.Icon>
+                        <Image Source="Icons/Help.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_About Fasm Code">
+                    <MenuItem.Icon>
+                        <Image Source="Icons/Info.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
         </Menu>
+        
         <StatusBar DockPanel.Dock="Bottom">
-            <StatusBarItem Content="Ready"></StatusBarItem>
+            <StatusBar.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </StatusBar.ItemsPanel>            
+            <StatusBarItem Grid.Column="0">
+                <TextBlock Margin="5 0">1:1</TextBlock>
+            </StatusBarItem>
+            <StatusBarItem Grid.Column="1">
+                <TextBlock Margin="5 0">Caps</TextBlock>
+            </StatusBarItem>
+            <StatusBarItem Grid.Column="2">
+                <TextBlock Margin="5 0">Num</TextBlock>
+            </StatusBarItem>
+            <StatusBarItem Grid.Column="3">
+                <TextBlock Margin="5 0">Ins</TextBlock>
+            </StatusBarItem>
+            <StatusBarItem Grid.Column="4">
+                <TextBlock Margin="5 0">UTF-8</TextBlock>
+            </StatusBarItem>
         </StatusBar>
+        
         <avalonEdit:TextEditor
             xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
             Name="textEditor"
@@ -34,5 +186,5 @@
             FontFamily="Consolas"
             FontSize="10pt">            
         </avalonEdit:TextEditor>
-    </DockPanel>
+    </DockPanel>        
 </Window>
