@@ -4,51 +4,68 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FasmCode"
+        xmlns:vm="clr-namespace:FasmCode.ViewModels"
         mc:Ignorable="d"
-        Title="Fasm Code" Height="350" Width="525">
+        Title="Fasm Code" Height="350" Width="525" WindowStartupLocation="CenterScreen">
+    <Window.DataContext>
+        <vm:MainViewModel/>
+    </Window.DataContext>
+
+    <Window.InputBindings>
+        <KeyBinding Key="N" Modifiers="Ctrl" Command="{Binding NewCommand}"/>
+        <KeyBinding Key="O" Modifiers="Ctrl" Command="{Binding OpenCommand}"/>        
+        <KeyBinding Key="F6" Command="{Binding CompileCommand}"/>
+        <KeyBinding Key="F5" Command="{Binding RunCommand}"/>
+    </Window.InputBindings>
+
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_File">
-                <MenuItem Header="_New File...">
+                <MenuItem Header="_New File..." Command="{Binding NewCommand}">
                     <MenuItem.Icon>
                         <Image Source="Icons/New.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="_Open...">
+                <MenuItem Header="_Open File..." Command="{Binding OpenCommand}">
                     <MenuItem.Icon>
                         <Image Source="Icons/Folder.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="_Save">
+                <MenuItem Header="O_pen Folder..." Command="{Binding OpenFolderCommand}">
+                    <MenuItem.Icon>
+                        <Image Source="Icons/Folder.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Save" Command="{Binding SaveCommand}">
                     <MenuItem.Icon>
                         <Image Source="Icons/Save.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Save _As...">
+                <MenuItem Header="Save _As..." Command="{Binding SaveAsCommand}">
                     <MenuItem.Icon>
                         <Image Source="Icons/SaveAs.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Save A_ll">
+                <MenuItem Header="Save A_ll" Command="{Binding SaveAllCommand}">
                     <MenuItem.Icon>
                         <Image Source="Icons/SaveAll.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="_Close">
+                <MenuItem Header="_Close" Command="{Binding CloseCommand}">
                 </MenuItem>
-                <MenuItem Header="Close _Project">
+                <MenuItem Header="Close _Folder" Command="{Binding CloseFolderCommand}">
                     <MenuItem.Icon>
                         <Image Source="Icons/Close.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator/>
-                <MenuItem Header="E_xit">
+                <MenuItem Header="E_xit" Command="{Binding ExitCommand}">
                     <MenuItem.Icon>
                         <Image Source="Icons/Exit.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            
+
             <MenuItem Header="_Edit">
                 <MenuItem Header="_Undo">
                     <MenuItem.Icon>
@@ -99,7 +116,7 @@
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            
+
             <MenuItem Header="_Build">
                 <MenuItem Header="_Compile">
                     <MenuItem.Icon>
@@ -130,7 +147,7 @@
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            
+
             <MenuItem Header="_Help">
                 <MenuItem Header="_Help">
                     <MenuItem.Icon>
@@ -144,6 +161,43 @@
                 </MenuItem>
             </MenuItem>
         </Menu>
+
+        <ToolBarTray DockPanel.Dock="Top">
+            <ToolBar>
+                <Button Command="{Binding NewCommand}">
+                    <Image Source="Icons/New.png"/>
+                </Button>
+                <Button Command="{Binding OpenCommand}">
+                    <Image Source="Icons/Folder.png"/>
+                </Button>
+                <Button Command="{Binding OpenFolderCommand}">
+                    <Image Source="Icons/Folder.png"/>
+                </Button>
+                <Button Command="{Binding SaveCommand}">
+                    <Image Source="Icons/Save.png"/>
+                </Button>
+                <Button Command="{Binding SaveAsCommand}">
+                    <Image Source="Icons/SaveAs.png"/>
+                </Button>
+                <Button Command="{Binding SaveAllCommand}">
+                    <Image Source="Icons/SaveAll.png"/>
+                </Button>
+                <Separator/>
+                <Button>
+                    <Image Source="Icons/Undo.png"/>
+                </Button>
+                <Button>
+                    <Image Source="Icons/Redo.png"/>
+                </Button>
+                <Separator/>
+                <Button Command="{Binding CompileCommand}">
+                    <Image Source="Icons/Compile.png"/>
+                </Button>
+                <Button Command="{Binding RunCommand}">
+                    <Image Source="Icons/Run.png"/>
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
         
         <StatusBar DockPanel.Dock="Bottom">
             <StatusBar.ItemsPanel>
@@ -161,7 +215,7 @@
                         </Grid.ColumnDefinitions>
                     </Grid>
                 </ItemsPanelTemplate>
-            </StatusBar.ItemsPanel>            
+            </StatusBar.ItemsPanel>
             <StatusBarItem Grid.Column="0">
                 <TextBlock Margin="5 0">1:1</TextBlock>
             </StatusBarItem>
@@ -178,13 +232,13 @@
                 <TextBlock Margin="5 0">UTF-8</TextBlock>
             </StatusBarItem>
         </StatusBar>
-        
+
         <avalonEdit:TextEditor
             xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
             Name="textEditor"
             SyntaxHighlighting="C#"
             FontFamily="Consolas"
-            FontSize="10pt">            
+            FontSize="10pt">
         </avalonEdit:TextEditor>
-    </DockPanel>        
+    </DockPanel>
 </Window>
