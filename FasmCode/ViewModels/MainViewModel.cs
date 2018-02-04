@@ -20,8 +20,6 @@ namespace FasmCode.ViewModels
         public ICommand CompileCommand { get; set; }
         public ICommand RunCommand { get; set; }
 
-        public DateTime Date { get; set; }
-
         public MainViewModel()
         {
             NewCommand = new RelayCommand(New);
@@ -35,7 +33,6 @@ namespace FasmCode.ViewModels
             ExitCommand = new RelayCommand(Exit);
             CompileCommand = new RelayCommand(Compile);
             RunCommand = new RelayCommand(Run);
-            Date = DateTime.Now;
         }
 
         public void New()

@@ -12,21 +12,21 @@
     </Window.DataContext>
 
     <Window.InputBindings>
-        <KeyBinding Key="N" Modifiers="Ctrl" Command="{Binding NewCommand}"/>
-        <KeyBinding Key="O" Modifiers="Ctrl" Command="{Binding OpenCommand}"/>        
-        <KeyBinding Key="F6" Command="{Binding CompileCommand}"/>
-        <KeyBinding Key="F5" Command="{Binding RunCommand}"/>
+        <KeyBinding Gesture="Ctrl+N" Command="{Binding NewCommand}"/>
+        <KeyBinding Gesture="Ctrl+O" Command="{Binding OpenCommand}"/>
+        <KeyBinding Gesture="F6" Command="{Binding CompileCommand}"/>
+        <KeyBinding Gesture="F5" Command="{Binding RunCommand}"/>
     </Window.InputBindings>
 
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_File">
-                <MenuItem Header="_New File..." Command="{Binding NewCommand}">
+                <MenuItem Header="_New File..." Command="New">
                     <MenuItem.Icon>
                         <Image Source="Icons/New.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="_Open File..." Command="{Binding OpenCommand}">
+                <MenuItem Header="_Open File..." Command="Open">
                     <MenuItem.Icon>
                         <Image Source="Icons/Folder.png"/>
                     </MenuItem.Icon>
@@ -36,12 +36,12 @@
                         <Image Source="Icons/Folder.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="_Save" Command="{Binding SaveCommand}">
+                <MenuItem Header="_Save" Command="Save">
                     <MenuItem.Icon>
                         <Image Source="Icons/Save.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Save _As..." Command="{Binding SaveAsCommand}">
+                <MenuItem Header="Save _As..." Command="SaveAs">
                     <MenuItem.Icon>
                         <Image Source="Icons/SaveAs.png"/>
                     </MenuItem.Icon>
@@ -51,7 +51,7 @@
                         <Image Source="Icons/SaveAll.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="_Close" Command="{Binding CloseCommand}">
+                <MenuItem Header="_Close" Command="Close">
                 </MenuItem>
                 <MenuItem Header="Close _Folder" Command="{Binding CloseFolderCommand}">
                     <MenuItem.Icon>
@@ -67,50 +67,50 @@
             </MenuItem>
 
             <MenuItem Header="_Edit">
-                <MenuItem Header="_Undo">
+                <MenuItem Header="_Undo" Command="Undo">
                     <MenuItem.Icon>
                         <Image Source="Icons/Undo.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="_Redo">
+                <MenuItem Header="_Redo" Command="Redo">
                     <MenuItem.Icon>
                         <Image Source="Icons/Redo.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator/>
-                <MenuItem Header="Cu_t">
+                <MenuItem Header="Cu_t" Command="Cut">
                     <MenuItem.Icon>
                         <Image Source="Icons/Cut.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="_Copy">
+                <MenuItem Header="_Copy" Command="Copy">
                     <MenuItem.Icon>
                         <Image Source="Icons/Copy.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="_Paste">
+                <MenuItem Header="_Paste" Command="Paste">
                     <MenuItem.Icon>
                         <Image Source="Icons/Paste.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="_Delete">
+                <MenuItem Header="_Delete" Command="Delete">
                     <MenuItem.Icon>
                         <Image Source="Icons/Delete.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator/>
-                <MenuItem Header="Select _All">
+                <MenuItem Header="Select _All" Command="SelectAll">
                     <MenuItem.Icon>
                         <Image Source="Icons/SelectAll.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator/>
-                <MenuItem Header="_Find">
+                <MenuItem Header="_Find" Command="Find">
                     <MenuItem.Icon>
                         <Image Source="Icons/Find.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="_Replace">
+                <MenuItem Header="_Replace" Command="Replace">
                     <MenuItem.Icon>
                         <Image Source="Icons/Replace.png"/>
                     </MenuItem.Icon>
@@ -149,7 +149,7 @@
             </MenuItem>
 
             <MenuItem Header="_Help">
-                <MenuItem Header="_Help">
+                <MenuItem Header="_Help" Command="Help">
                     <MenuItem.Icon>
                         <Image Source="Icons/Help.png"/>
                     </MenuItem.Icon>
@@ -183,10 +183,10 @@
                     <Image Source="Icons/SaveAll.png"/>
                 </Button>
                 <Separator/>
-                <Button>
+                <Button Command="Undo">
                     <Image Source="Icons/Undo.png"/>
                 </Button>
-                <Button>
+                <Button Command="Redo">
                     <Image Source="Icons/Redo.png"/>
                 </Button>
                 <Separator/>
