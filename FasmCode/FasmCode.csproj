@@ -73,9 +73,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="Commands\IRelayCommand.cs" />
-    <Compile Include="Config\ConfigManager.cs" />
-    <Compile Include="Config\HotKeys.cs" />
+    <Compile Include="Models\Config.cs" />
+    <Compile Include="Models\Theme.cs" />
+    <Compile Include="Settings\SettingsManager.cs" />
+    <Compile Include="Models\Keymap.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
@@ -108,10 +109,15 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Config\Hotkeys\Default.toml">
+    <None Include="Settings\Config.toml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Config\Themes\Visual Studio.toml" />
+    <None Include="Settings\Keymaps\Fasm Code.toml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Settings\Themes\Fasm Code.toml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -134,7 +140,7 @@
     <Resource Include="Icons\Exit.png" />
     <Resource Include="Icons\Folder.png" />
     <Resource Include="Icons\New.png" />
-    <Resource Include="Icons\Options.png" />
+    <Resource Include="Icons\Settings.png" />
     <Resource Include="Icons\Paste.png" />
     <Resource Include="Icons\Run.png" />
     <Resource Include="Icons\Save.png" />
@@ -156,7 +162,6 @@
     <Resource Include="Logo.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\" />
     <Folder Include="Views\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

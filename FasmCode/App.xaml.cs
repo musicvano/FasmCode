@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 
 namespace FasmCode
 {
@@ -13,5 +7,12 @@ namespace FasmCode
     /// </summary>
     public partial class App : Application
     {
+        private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            string message = "An application error occurred:\n" + e.Exception.Message;
+            if (e.Exception.InnerException != null)
+                message += "\n" + e.Exception.InnerException.Message;
+            MessageBox.Show(message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
     }
 }

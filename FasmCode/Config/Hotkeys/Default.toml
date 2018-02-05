@@ -1,9 +1,0 @@
-﻿[HotKeys]
-NewFile = "Ctrl+N"
-OpenFile = "Ctrl+O"
-OpenFolder = "Ctrl+Shift+O"
-SaveFile = "Ctrl+S"
-SaveAsFile = ""
-SaveAll = "Ctrl+Shift+S"
-Compile = "F6"
-Run = "F5"

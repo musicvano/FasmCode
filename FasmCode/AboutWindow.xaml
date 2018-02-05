@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FasmCode"
         mc:Ignorable="d"
-        Title="AboutWindow" Height="300" Width="300">
+        Title="About Fasm Code" Height="300" Width="300"
+        WindowStartupLocation="CenterOwner" WindowStyle="ThreeDBorderWindow" ResizeMode="NoResize" Icon="Icons/Info.png">
     <Grid>
 
     </Grid>

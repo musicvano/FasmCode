@@ -1,0 +1,5 @@
+﻿# Theme configuration file
+
+Backgroud = "white"
+Keyword = "black"
+Comment = "gray"

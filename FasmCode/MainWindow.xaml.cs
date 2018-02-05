@@ -1,6 +1,5 @@
 ﻿using FasmCode.ViewModels;
 using System.Windows;
-using System.Windows.Input;
 
 namespace FasmCode
 {
@@ -13,7 +12,7 @@ namespace FasmCode
         {
             InitializeComponent();
             var viewModel = (MainViewModel)DataContext;
-            InputBindings.AddRange(viewModel.HotKeys);
+            InputBindings.AddRange(viewModel.KeyBindings);
         }
     }
 }

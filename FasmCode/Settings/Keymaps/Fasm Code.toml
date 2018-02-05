@@ -1,0 +1,36 @@
+﻿# Keymap configuration file
+
+# File	
+New = "Ctrl+N"
+Open = "Ctrl+O"
+OpenFolder = "Ctrl+Shift+O"
+Save = "Ctrl+S"
+SaveAs = ""
+SaveAll = "Ctrl+Shift+S"
+Close = ""
+CloseFolder = ""
+Exit = "Alt+F4"
+
+# Edit
+Undo = "Ctrl+Z"
+Redo = "Ctrl+Y"
+Cut = "Ctrl+X"
+Copy = "Ctrl+C"
+Paste = "Ctrl+V"
+Delete = "Del"
+SelectAll = "Ctrl+A"
+Find = "Ctrl+F"
+Replace = "Ctrl+H"
+
+#Build
+Compile = "F6"
+Run = "F5"
+
+#Tools
+Terminal = ""
+Calculator = ""
+Settings = ""
+
+#Help
+Help = "F1"
+About = ""
