@@ -7,8 +7,8 @@ namespace FasmCode.ViewModels
 {
     class MainViewModel
     {
-        public ICommand NewCommand { get; set; }
-        public ICommand OpenCommand { get; set; }
+        public ICommand NewFileCommand { get; set; }
+        public ICommand OpenFileCommand { get; set; }
         public ICommand OpenFolderCommand { get; set; }
         public ICommand SaveCommand { get; set; }
         public ICommand SaveAsCommand { get; set; }
@@ -20,10 +20,12 @@ namespace FasmCode.ViewModels
         public ICommand CompileCommand { get; set; }
         public ICommand RunCommand { get; set; }
 
+        public InputBindingCollection HotKeys { get; set; }
+
         public MainViewModel()
         {
-            NewCommand = new RelayCommand(New);
-            OpenCommand = new RelayCommand(Open);
+            NewFileCommand = new RelayCommand(NewFileExecute, NewFileCanExecute);
+            OpenFileCommand = new RelayCommand(OpenFileExecute, OpenFileCanExecute);
             OpenFolderCommand = new RelayCommand(OpenFolder);
             SaveCommand = new RelayCommand(Save);
             SaveAsCommand = new RelayCommand(SaveAs);
@@ -33,14 +35,24 @@ namespace FasmCode.ViewModels
             ExitCommand = new RelayCommand(Exit);
             CompileCommand = new RelayCommand(Compile);
             RunCommand = new RelayCommand(Run);
+
+            // Load from file Config/HotKeys.toml
+            string keyStr = "Ctrl+Shift+F6";
+            KeyGestureConverter converter = new KeyGestureConverter();
+            HotKeys = new InputBindingCollection();
+            
+            var hotKey = (KeyGesture)converter.ConvertFromString(keyStr);
+            HotKeys.Add(new KeyBinding(OpenFileCommand, new KeyGesture(hotKey.Key, hotKey.Modifiers, keyStr)));
         }
 
-        public void New()
+        public void NewFileExecute()
         {
             throw new NotImplementedException();
         }
 
-        private void Open()
+        private bool NewFileCanExecute() => true;
+
+        private void OpenFileExecute()
         {
             OpenFileDialog dialog = new OpenFileDialog();
             if (dialog.ShowDialog() == DialogResult.OK)
@@ -48,6 +60,8 @@ namespace FasmCode.ViewModels
 
             }
         }
+
+        private bool OpenFileCanExecute() => true;
 
         private void OpenFolder()
         {

@@ -3,10 +3,12 @@ using System.Windows.Input;
 
 namespace FasmCode.Commands
 {
-    public class RelayCommand : ICommand
+    public class RelayCommand : IRelayCommand
     {
         private readonly Action execute;
         private readonly Func<bool> canExecute;
+
+        public KeyGesture HotKey { get; set; }
 
         public RelayCommand(Action execute) :
             this(execute, null)
@@ -17,6 +19,12 @@ namespace FasmCode.Commands
             this.execute = execute ?? throw new ArgumentNullException(nameof(execute));
             this.canExecute = canExecute;
         }
+
+        /*public RelayCommand(Action execute, Func<bool> canExecute, KeyGesture hotKey)
+        {
+            this.execute = execute ?? throw new ArgumentNullException(nameof(execute));
+            this.canExecute = canExecute;
+        }*/
 
         public bool CanExecute(object parameter)
         {
