@@ -2,3 +2,4 @@
 
 Theme = "Fasm Code"
 Keymap = "Fasm Code"
+Compiler = "Fasm.exe"

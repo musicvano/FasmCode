@@ -4,12 +4,19 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FasmCode"
+        xmlns:intr="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:vm="clr-namespace:FasmCode.ViewModels"
         mc:Ignorable="d"
         Title="Fasm Code" Height="350" Width="525" WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <vm:MainViewModel Window="{x:Reference Name = mainWindow}"/>
     </Window.DataContext>
+    
+    <intr:Interaction.Triggers>
+        <intr:EventTrigger EventName="Loaded">
+            <intr:InvokeCommandAction Command="{Binding WindowLoaded}"/>
+        </intr:EventTrigger>
+    </intr:Interaction.Triggers>
 
     <DockPanel>
         <Menu DockPanel.Dock="Top">
@@ -287,12 +294,36 @@
             </StatusBarItem>
         </StatusBar>
 
-        <avalonEdit:TextEditor
-            xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
-            Name="textEditor"
-            SyntaxHighlighting="C#"
-            FontFamily="Consolas"
-            FontSize="10pt">
-        </avalonEdit:TextEditor>
+        <Grid DockPanel.Dock="Bottom">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="1"/>
+                <RowDefinition Height="100"/>
+            </Grid.RowDefinitions>
+            <TabControl Grid.Row="0">
+                <TabItem Header="File1.asm">
+                    <avalonEdit:TextEditor
+                        xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
+                        Name="textEditor"
+                        SyntaxHighlighting="C#"
+                        FontFamily="Consolas"
+                        FontSize="10pt">
+                    </avalonEdit:TextEditor>
+                </TabItem>
+                <TabItem Header="File2.asm"></TabItem>
+                <TabItem Header="File3.asm"></TabItem>
+                <TabItem Header="File4.asm"></TabItem>
+
+            </TabControl>
+
+            <GridSplitter Grid.Row="1" Height="1" HorizontalAlignment="Stretch"  VerticalAlignment="Center"/>
+
+            <TabControl Grid.Row="2" TabStripPlacement="Bottom">
+                <TabItem Header="Output">
+                    <TextBlock Text="Compilation..."/>
+                </TabItem>
+            </TabControl>
+            
+        </Grid>
     </DockPanel>
 </Window>

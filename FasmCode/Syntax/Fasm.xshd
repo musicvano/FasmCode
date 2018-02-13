@@ -1,0 +1,265 @@
+<?xml version="1.0"?>
+<!-- Syntax definition for flat assembler language -->
+<SyntaxDefinition name ="Fasm" extensions = ".asm;.inc" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
+  <Color name="Comment" foreground="Green" exampleText="; comment" />
+  <Color name="String" foreground="Blue" exampleText="&quot;Hello, World!&quot;" />
+  <Color name="Number" foreground="Red" exampleText="3.1415, 0b1100, 0xFF00, 1e5, 100" />
+  <Color name="SizeOperator" foreground="Red" exampleText="byte, word, dword, qword" />
+  <Color name="Register" foreground="Blue" fontWeight="bold" exampleText="eax, al, esp, ebp, rax" />
+  <Color name="Instruction" foreground="Blue" fontWeight="bold" exampleText="mov, add, sub, push, pop" />
+
+  <Color name="Punctuation" foreground="DarkGreen" exampleText="a(b + c)" />
+  <Color name="FunctionCall" foreground="MidnightBlue" fontWeight="bold" exampleText="abs(num);"/>
+  <Color name="AccessKeywords" foreground="Black" fontWeight="bold" exampleText="global $database;" />
+  <Color name="OperatorKeywords" foreground="DarkCyan" fontWeight="bold" exampleText="if (x === false and y === false) { }" />
+  <Color name="SelectionStatements" foreground="Blue" fontWeight="bold" exampleText="if (true) { } else { }" />
+  <Color name="IterationStatements" foreground="Blue" fontWeight="bold" exampleText="while (true) { }" />
+  <Color name="JumpStatements" foreground="Navy" fontWeight="bold" exampleText="if (x == 5) continue;" />
+  <Color name="ControlStatements" foreground="Teal" fontWeight="bold" exampleText="include(&quot;test.php&quot;);" />
+  <Color name="ValueTypes" foreground="Red" fontWeight="bold" exampleText="int test = 5;" />
+  <RuleSet>
+    <Span color="Comment">
+      <Begin>;</Begin>
+    </Span>
+
+    <Span color="Comment">
+      <Begin>//</Begin>
+    </Span>
+
+    <Span color="Comment" multiline="true">
+      <Begin>/\*</Begin>
+      <End>\*/</End>
+    </Span>
+
+    <!-- Digits -->
+    <Rule color="Number">
+      \b0[xX][0-9a-fA-F]+  # hex number
+      |
+      \b[0-9a-fA-F]+h  # hex number
+      |
+      \b[0-7]+o # octal number
+      |
+      \b[01]+b # binary number
+      |
+      (	\b\d+(\.[0-9]+)?   #number with optional floating point
+      |	\.[0-9]+           #or just starting with floating point
+      )
+      ([eE][+-]?[0-9]+)? # optional exponent
+    </Rule>
+
+    <Rule color="Punctuation">
+      [?,.:()\[\]{}+\-/%*&lt;&gt;&amp;^!|~@]+
+    </Rule>
+
+    <!-- Mark previous rule-->
+    <Rule color="FunctionCall">
+      \b
+      [\d\w_]+  # an identifier
+      (?=\s*\() # followed by (
+    </Rule>
+
+    <Span color="String" multiline="true">
+      <Begin>'</Begin>
+      <End>'</End>
+      <RuleSet>
+        <!-- span for escape sequences -->
+        <Span begin="\\" end="."/>
+      </RuleSet>
+    </Span>
+
+    <Span color="String" multiline="true">
+      <Begin>"</Begin>
+      <End>"</End>
+      <RuleSet>
+        <!-- span for escape sequences -->
+        <Span begin="\\" end="."/>
+      </RuleSet>
+    </Span>
+
+    <!-- heredoc syntax -->
+    <Span color="String" multiline="true">
+      <Begin>&lt;&lt;&lt;\"?[\d\w_]+\"?$</Begin>
+      <End>^[\d\w_]+;</End>
+    </Span>
+
+    <!-- nowdoc syntax -->
+    <Span color="String" multiline="true">
+      <Begin>&lt;&lt;&lt;\'[\d\w_]+\'$</Begin>
+      <End>^[\d\w_]+;</End>
+    </Span>
+
+    <Keywords color="AccessKeywords">
+      <Word>global</Word>
+      <Word>my</Word>
+      <Word>var</Word>
+    </Keywords>
+
+    <Keywords color="OperatorKeywords">
+      <Word>and</Word>
+      <Word>or</Word>
+      <Word>new</Word>
+      <Word>clone</Word>
+      <Word>instanceof</Word>
+      <Word>xor</Word>
+      <Word>true</Word>
+      <Word>false</Word>
+    </Keywords>
+
+    <Keywords color="SelectionStatements">
+      <Word>else</Word>
+      <Word>else</Word>
+      <Word>switch</Word>
+      <Word>case</Word>
+      <Word>endif</Word>
+      <Word>elseif</Word>
+    </Keywords>
+
+    <Keywords color="IterationStatements">
+      <Word>do</Word>
+      <Word>for</Word>
+      <Word>foreach</Word>
+      <Word>while</Word>
+      <Word>endwhile</Word>
+      <Word>exit</Word>
+    </Keywords>
+
+    <Keywords color="JumpStatements">
+      <Word>break</Word>
+      <Word>continue</Word>
+      <Word>default</Word>
+      <Word>goto</Word>
+      <Word>return</Word>
+    </Keywords>
+
+    <Keywords color="ControlStatements">
+      <Word>require</Word>
+      <Word>include</Word>
+      <Word>require</Word>
+      <Word>include</Word>
+      <Word>function</Word>
+    </Keywords>
+
+    <Keywords color="ValueTypes">
+      <Word>int</Word>
+      <Word>integer</Word>
+      <Word>real</Word>
+      <Word>double</Word>
+      <Word>float</Word>
+      <Word>string</Word>
+      <Word>array</Word>
+      <Word>object</Word>
+    </Keywords>
+
+    <Keywords color="SizeOperator">
+      <Word>byte</Word>
+      <Word>word</Word>
+      <Word>dword</Word>
+      <Word>fword</Word>
+      <Word>pword</Word>
+      <Word>qword</Word>
+      <Word>tbyte</Word>
+      <Word>tword</Word>
+      <Word>dqword</Word>
+      <Word>xword</Word>
+      <Word>qqword</Word>
+      <Word>yword</Word>
+      <Word>dqqword</Word>
+      <Word>zword</Word>
+    </Keywords>
+
+    <Keywords color="Register">
+      <Word>al</Word>
+      <Word>bl</Word>
+      <Word>cl</Word>
+      <Word>dl</Word>
+      <Word>ah</Word>
+      <Word>bh</Word>
+      <Word>ch</Word>
+      <Word>dh</Word>
+      <Word>ax</Word>
+      <Word>bx</Word>
+      <Word>cx</Word>
+      <Word>dx</Word>
+      <Word>sp</Word>
+      <Word>bp</Word>
+      <Word>si</Word>
+      <Word>di</Word>
+      <Word>eax</Word>
+      <Word>ebx</Word>
+      <Word>ecx</Word>
+      <Word>edx</Word>
+      <Word>esp</Word>
+      <Word>ebp</Word>
+      <Word>esi</Word>
+      <Word>edi</Word>
+      <Word>es</Word>
+      <Word>cs</Word>
+      <Word>ss</Word>
+      <Word>ds</Word>
+      <Word>fs</Word>
+      <Word>gs</Word>
+      <Word>cr0</Word>
+      <Word>cr2</Word>
+      <Word>cr3</Word>
+      <Word>cr4</Word>
+      <Word>dr0</Word>
+      <Word>dr1</Word>
+      <Word>dr2</Word>
+      <Word>dr3</Word>
+      <Word>dr6</Word>
+      <Word>dr7</Word>
+      <Word>st0</Word>
+      <Word>st1</Word>
+      <Word>st2</Word>
+      <Word>st3</Word>
+      <Word>st4</Word>
+      <Word>st5</Word>
+      <Word>st6</Word>
+      <Word>st7</Word>
+      <Word>mm0</Word>
+      <Word>mm1</Word>
+      <Word>mm2</Word>
+      <Word>mm3</Word>
+      <Word>mm4</Word>
+      <Word>mm5</Word>
+      <Word>mm6</Word>
+      <Word>mm7</Word>
+      <Word>xmm0</Word>
+      <Word>xmm1</Word>
+      <Word>xmm2</Word>
+      <Word>xmm3</Word>
+      <Word>xmm4</Word>
+      <Word>xmm5</Word>
+      <Word>xmm6</Word>
+      <Word>xmm7</Word>
+      <Word>ymm0</Word>
+      <Word>ymm1</Word>
+      <Word>ymm2</Word>
+      <Word>ymm3</Word>
+      <Word>ymm4</Word>
+      <Word>ymm5</Word>
+      <Word>ymm6</Word>
+      <Word>ymm7</Word>
+      <Word>zmm0</Word>
+      <Word>zmm1</Word>
+      <Word>zmm2</Word>
+      <Word>zmm3</Word>
+      <Word>zmm4</Word>
+      <Word>zmm5</Word>
+      <Word>zmm6</Word>
+      <Word>zmm7</Word>
+      <Word>k0</Word>
+      <Word>k1</Word>
+      <Word>k2</Word>
+      <Word>k3</Word>
+      <Word>k4</Word>
+      <Word>k5</Word>
+      <Word>k6</Word>
+      <Word>k7</Word>
+      <Word>bnd0</Word>
+      <Word>bnd1</Word>
+      <Word>bnd2</Word>
+      <Word>bnd3</Word>
+    </Keywords>
+  </RuleSet>
+</SyntaxDefinition>

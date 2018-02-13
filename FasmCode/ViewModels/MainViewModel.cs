@@ -1,7 +1,12 @@
 ﻿using FasmCode.Commands;
 using FasmCode.Settings;
+using ICSharpCode.AvalonEdit.Highlighting;
+using ICSharpCode.AvalonEdit.Highlighting.Xshd;
+using System.Reflection;
 using System.Windows.Forms;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Xml;
 
 namespace FasmCode.ViewModels
 {
@@ -9,6 +14,7 @@ namespace FasmCode.ViewModels
     {
         public MainWindow Window { get; set; }
         public SettingsManager Settings { get; set; }
+        public ICommand WindowLoaded { get; set; }
 
         public ICommand NewCommand { get; set; }
         public ICommand OpenCommand { get; set; }
@@ -51,6 +57,7 @@ namespace FasmCode.ViewModels
 
         private void CreateCommands()
         {
+            WindowLoaded = new RelayCommand(WindowLoadedExecute, () => true);
             NewCommand = new RelayCommand(NewExecute, NewCanExecute);
             OpenCommand = new RelayCommand(OpenExecute, OpenCanExecute);
             OpenFolderCommand = new RelayCommand(OpenFolderExecute, OpenFolderCanExecute);
@@ -117,6 +124,41 @@ namespace FasmCode.ViewModels
                 new KeyBinding(HelpCommand, converter.ConvertFromString(Settings.Keymap.Help) as KeyGesture),
                 new KeyBinding(AboutCommand, converter.ConvertFromString(Settings.Keymap.About) as KeyGesture)
             };
+        }
+
+        private void WindowLoadedExecute()
+        {
+            using (XmlTextReader reader = new XmlTextReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("FasmCode.Syntax.Fasm.xshd")))
+            {
+                XshdSyntaxDefinition syntax = HighlightingLoader.LoadXshd(reader);
+                foreach (var element in syntax.Elements)
+                {
+                    if (element is XshdColor)
+                    {
+                        var xshdColor = element as XshdColor;
+                        switch (xshdColor.Name)
+                        {
+                            case "Comment":
+                                break;
+                            case "String":
+                                break;
+                            case "Number":
+                                break;
+                            case "SizeOperator":
+                                break;
+                            case "Register":
+                                var c = (Color)ColorConverter.ConvertFromString("#FFFFFF00");
+                                xshdColor.Background = new SimpleHighlightingBrush(c /*Color.FromScRgb(1.0f, 0.9f, 0.9f, 0.3f)*/);
+                                break;
+                            case "Instruction":
+                                break;
+                            default:
+                                break;
+                        }                        
+                    }
+                }
+                Window.textEditor.SyntaxHighlighting = HighlightingLoader.Load(syntax, HighlightingManager.Instance);
+            }
         }
 
         private void NewExecute()
