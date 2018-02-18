@@ -300,24 +300,8 @@
                 <RowDefinition Height="1"/>
                 <RowDefinition Height="100"/>
             </Grid.RowDefinitions>
-            <TabControl Grid.Row="0">
-                <TabItem Header="File1.asm">
-                    <avalonEdit:TextEditor
-                        xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
-                        Name="textEditor"
-                        SyntaxHighlighting="C#"
-                        FontFamily="Consolas"
-                        FontSize="10pt">
-                    </avalonEdit:TextEditor>
-                </TabItem>
-                <TabItem Header="File2.asm"></TabItem>
-                <TabItem Header="File3.asm"></TabItem>
-                <TabItem Header="File4.asm"></TabItem>
-
-            </TabControl>
-
+            <TabControl Grid.Row="0" Name="tabControl"/>
             <GridSplitter Grid.Row="1" Height="1" HorizontalAlignment="Stretch"  VerticalAlignment="Center"/>
-
             <TabControl Grid.Row="2" TabStripPlacement="Bottom">
                 <TabItem Header="Output">
                     <TextBlock Text="Compilation..."/>

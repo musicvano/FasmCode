@@ -1,5 +1,6 @@
 ﻿using FasmCode.ViewModels;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace FasmCode
 {

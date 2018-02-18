@@ -3,6 +3,7 @@ using FasmCode.Settings;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 using System.Reflection;
+using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -157,12 +158,28 @@ namespace FasmCode.ViewModels
                         }                        
                     }
                 }
-                Window.textEditor.SyntaxHighlighting = HighlightingLoader.Load(syntax, HighlightingManager.Instance);
+                //Window.textEditor.SyntaxHighlighting = HighlightingLoader.Load(syntax, HighlightingManager.Instance);
             }
         }
 
         private void NewExecute()
         {
+                // Create the header
+                var header = new TextBlock { Text = "Tab!" };
+
+                // Create the content
+                var content = new TextBlock
+                {
+                    Text = string.Format("Tab numero {0}-o", Window.tabControl.Items.Count + 1)
+                };
+
+                // Create the tab
+                var tab = new CloseableTabItem();
+                tab.SetHeader(header);
+                tab.Content = content;
+
+                // Add to TabControl
+                Window.tabControl.Items.Add(tab);
 
         }
 
