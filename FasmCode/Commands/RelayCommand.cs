@@ -5,14 +5,14 @@ namespace FasmCode.Commands
 {
     public class RelayCommand : ICommand
     {
-        private readonly Action execute;
-        private readonly Func<bool> canExecute;
+        private readonly Action<object> execute;
+        private readonly Predicate<object> canExecute;
 
-        public RelayCommand(Action execute) :
+        public RelayCommand(Action<object> execute) :
             this(execute, null)
         { }
 
-        public RelayCommand(Action execute, Func<bool> canExecute)
+        public RelayCommand(Action<object> execute, Predicate<object> canExecute)
         {
             this.execute = execute ?? throw new ArgumentNullException(nameof(execute));
             this.canExecute = canExecute;
@@ -20,7 +20,7 @@ namespace FasmCode.Commands
 
         public bool CanExecute(object parameter)
         {
-            return canExecute == null ? true : canExecute();
+            return canExecute == null ? true : canExecute(parameter);
         }
 
         public event EventHandler CanExecuteChanged
@@ -31,39 +31,7 @@ namespace FasmCode.Commands
 
         public void Execute(object parameter)
         {
-            execute();
-        }
-    }
-
-    public class RelayCommand<T> : ICommand
-    {
-        private readonly Action<T> execute;
-        private readonly Predicate<T> canExecute;
-
-        public RelayCommand(Action<T> execute) :
-            this(execute, null)
-        { }
-
-        public RelayCommand(Action<T> execute, Predicate<T> canExecute)
-        {
-            this.execute = execute ?? throw new ArgumentNullException(nameof(execute));
-            this.canExecute = canExecute;
-        }
-
-        public bool CanExecute(object parameter)
-        {
-            return canExecute == null ? true : canExecute((T)parameter);
-        }
-
-        public event EventHandler CanExecuteChanged
-        {
-            add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value; }
-        }
-
-        public void Execute(object parameter)
-        {
-            execute((T)parameter);
+            execute(parameter);
         }
     }
 }

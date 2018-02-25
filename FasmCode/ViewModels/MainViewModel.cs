@@ -2,8 +2,12 @@
 using FasmCode.Settings;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.IO;
 using System.Reflection;
-using System.Windows.Controls;
+using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -11,9 +15,8 @@ using System.Xml;
 
 namespace FasmCode.ViewModels
 {
-    class MainViewModel
+    class MainViewModel : INotifyPropertyChanged
     {
-        public MainWindow Window { get; set; }
         public SettingsManager Settings { get; set; }
         public ICommand WindowLoaded { get; set; }
 
@@ -48,17 +51,38 @@ namespace FasmCode.ViewModels
         public ICommand AboutCommand { get; set; }
 
         public InputBindingCollection KeyBindings { get; set; }
+        public ObservableCollection<SourceViewModel> Sources { get; set; }
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private int selectedSourceIndex;
+
+        public int SelectedSourceIndex
+        {
+            get { return selectedSourceIndex; }
+            set
+            {
+                if (value == selectedSourceIndex) return;
+                selectedSourceIndex = value;
+                OnPropertyChanged();
+            }
+        }
+
+        internal void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
         public MainViewModel()
         {
             Settings = new SettingsManager();
             CreateCommands();
             CreateKeyBindings();
+            Sources = new ObservableCollection<SourceViewModel>();
         }
 
         private void CreateCommands()
         {
-            WindowLoaded = new RelayCommand(WindowLoadedExecute, () => true);
+            WindowLoaded = new RelayCommand(WindowLoadedExecute, param => true);
             NewCommand = new RelayCommand(NewExecute, NewCanExecute);
             OpenCommand = new RelayCommand(OpenExecute, OpenCanExecute);
             OpenFolderCommand = new RelayCommand(OpenFolderExecute, OpenFolderCanExecute);
@@ -127,7 +151,7 @@ namespace FasmCode.ViewModels
             };
         }
 
-        private void WindowLoadedExecute()
+        private void WindowLoadedExecute(object param)
         {
             using (XmlTextReader reader = new XmlTextReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("FasmCode.Syntax.Fasm.xshd")))
             {
@@ -155,212 +179,254 @@ namespace FasmCode.ViewModels
                                 break;
                             default:
                                 break;
-                        }                        
+                        }
                     }
                 }
                 //Window.textEditor.SyntaxHighlighting = HighlightingLoader.Load(syntax, HighlightingManager.Instance);
             }
         }
 
-        private void NewExecute()
+        private void NewExecute(object param)
         {
-                // Create the header
-                var header = new TextBlock { Text = "Tab!" };
+            SaveFileDialog dialog = new SaveFileDialog
+            {
+                Title = "New File",
+                DefaultExt = "asm",
+                OverwritePrompt = true,
+                FileName = "file.asm",
+                Filter = "Assembly File (*.asm)|*.asm|Include File (*.inc)|*.inc"
+            };
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                var source = new SourceViewModel();
+                source.Document.FileName = dialog.FileName;
+                Sources.Add(source);
+                SelectedSourceIndex = Sources.Count - 1;
+                File.Create(dialog.FileName).Close();
+            }
+        }
 
-                // Create the content
-                var content = new TextBlock
+        private bool NewCanExecute(object param) => true;
+
+        private void OpenExecute(object param)
+        {
+            OpenFileDialog dialog = new OpenFileDialog
+            {
+                Filter = "Assembly Files (*.asm)|*.asm|Include Files (*.inc)|*.inc|All Files(*.*)|*.*"
+            };
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                using (var reader = new StreamReader(dialog.FileName))
                 {
-                    Text = string.Format("Tab numero {0}-o", Window.tabControl.Items.Count + 1)
-                };
-
-                // Create the tab
-                var tab = new CloseableTabItem();
-                tab.SetHeader(header);
-                tab.Content = content;
-
-                // Add to TabControl
-                Window.tabControl.Items.Add(tab);
-
-        }
-
-        private bool NewCanExecute() => true;
-
-        private void OpenExecute()
-        {
-            OpenFileDialog dialog = new OpenFileDialog();
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-
+                    var source = new SourceViewModel();
+                    source.Document.FileName = dialog.FileName;
+                    source.Document.Text = reader.ReadToEnd();
+                    Sources.Add(source);
+                    SelectedSourceIndex = Sources.Count - 1;
+                }
             }
         }
 
-        private bool OpenCanExecute() => true;
+        private bool OpenCanExecute(object param) => true;
 
-        private void OpenFolderExecute()
-        {
-            
-        }
-
-        private bool OpenFolderCanExecute() => true;
-
-        private void SaveExecute()
+        private void OpenFolderExecute(object param)
         {
 
         }
 
-        private bool SaveCanExecute() => true;
+        private bool OpenFolderCanExecute(object param) => true;
 
-        private void SaveAsExecute()
+        private void SaveExecute(object param)
         {
-            SaveFileDialog dialog = new SaveFileDialog();
+
+        }
+
+        private bool SaveCanExecute(object param)
+        {
+            return Sources.Count > 0;
+        }
+
+        private void SaveAsExecute(object param)
+        {
+            var source = Sources[SelectedSourceIndex];
+            SaveFileDialog dialog = new SaveFileDialog
+            {
+                Title = "Save File As",
+                DefaultExt = "asm",
+                OverwritePrompt = true,
+                FileName = source.ShortFileName,
+                Filter = "Assembly File (*.asm)|*.asm|Include File (*.inc)|*.inc"
+            };
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-
+                using (var writer = new StreamWriter(dialog.FileName))
+                {
+                    writer.Write(source.Document.Text);
+                }
             }
         }
 
-        private bool SaveAsCanExecute() => true;
-        
-        private void SaveAllExecute()
+        private bool SaveAsCanExecute(object param)
+        {
+            return Sources.Count > 0;
+        }
+
+        private void SaveAllExecute(object param)
+        {
+            foreach (var source in Sources)
+            {
+                using (var writer = new StreamWriter(source.Document.FileName))
+                {
+                    writer.Write(source.Document.Text);
+                }
+            }
+        }
+
+        private bool SaveAllCanExecute(object param)
+        {
+            return Sources.Count > 0;
+        }
+
+        private void CloseExecute(object parameter)
+        {
+            if (parameter is SourceViewModel)
+            {
+                Sources.Remove(parameter as SourceViewModel);
+            }
+            else
+            {
+                Sources.RemoveAt(SelectedSourceIndex);
+            }
+        }
+
+        private bool CloseCanExecute(object param) => true;
+
+        private void CloseFolderExecute(object param)
         {
 
         }
 
-        private bool SaveAllCanExecute() => true;
+        private bool CloseFolderCanExecute(object param) => true;
 
-        private void CloseExecute()
+        private void ExitExecute(object param)
         {
 
         }
 
-        private bool CloseCanExecute() => true;
-        
-        private void CloseFolderExecute()
+        private bool ExitCanExecute(object param) => true;
+
+        private void UndoExecute(object param)
         {
 
         }
 
-        private bool CloseFolderCanExecute() => true;
-        
-        private void ExitExecute()
+        private bool UndoCanExecute(object param) => true;
+
+        private void RedoExecute(object param)
         {
 
         }
 
-        private bool ExitCanExecute() => true;
+        private bool RedoCanExecute(object param) => true;
 
-        private void UndoExecute()
+        private void CutExecute(object param)
         {
 
         }
 
-        private bool UndoCanExecute() => true;
+        private bool CutCanExecute(object param) => true;
 
-        private void RedoExecute()
+        private void CopyExecute(object param)
         {
 
         }
 
-        private bool RedoCanExecute() => true;
+        private bool CopyCanExecute(object param) => true;
 
-        private void CutExecute()
+        private void PasteExecute(object param)
         {
 
         }
 
-        private bool CutCanExecute() => true;
+        private bool PasteCanExecute(object param) => true;
 
-        private void CopyExecute()
-        {
-            
-        }
-
-        private bool CopyCanExecute() => true;
-
-        private void PasteExecute()
+        private void DeleteExecute(object param)
         {
 
         }
 
-        private bool PasteCanExecute() => true;
+        private bool DeleteCanExecute(object param) => true;
 
-        private void DeleteExecute()
+        private void SelectAllExecute(object param)
         {
 
         }
 
-        private bool DeleteCanExecute() => true;
+        private bool SelectAllCanExecute(object param) => true;
 
-        private void SelectAllExecute()
+        private void FindExecute(object param)
         {
 
         }
 
-        private bool SelectAllCanExecute() => true;
+        private bool FindCanExecute(object param) => true;
 
-        private void FindExecute()
+        private void ReplaceExecute(object param)
         {
 
         }
 
-        private bool FindCanExecute() => true;
+        private bool ReplaceCanExecute(object param) => true;
 
-        private void ReplaceExecute()
+        private void CompileExecute(object param)
         {
 
         }
 
-        private bool ReplaceCanExecute() => true;
+        private bool CompileCanExecute(object param) => true;
 
-        private void CompileExecute()
+        private void RunExecute(object param)
         {
 
         }
 
-        private bool CompileCanExecute() => true;
+        private bool RunCanExecute(object param) => true;
 
-        private void RunExecute()
+        private void TerminalExecute(object param)
         {
 
         }
 
-        private bool RunCanExecute() => true;
+        private bool TerminalCanExecute(object param) => true;
 
-        private void TerminalExecute()
+        private void CalculatorExecute(object param)
         {
 
         }
 
-        private bool TerminalCanExecute() => true;
+        private bool CalculatorCanExecute(object param) => true;
 
-        private void CalculatorExecute()
+        private void SettingsExecute(object param)
         {
 
         }
 
-        private bool CalculatorCanExecute() => true;
+        private bool SettingsCanExecute(object param) => true;
 
-        private void SettingsExecute()
+        private void HelpExecute(object param)
         {
 
         }
 
-        private bool SettingsCanExecute() => true;
+        private bool HelpCanExecute(object param) => true;
 
-        private void HelpExecute()
-        {
-
-        }
-
-        private bool HelpCanExecute() => true;
-
-        private void AboutExecute()
+        private void AboutExecute(object param)
         {
             AboutWindow aboutWindow = new AboutWindow();
-            aboutWindow.Owner = Window;
+            aboutWindow.Owner = param as Window;
             aboutWindow.ShowDialog();
         }
 
-        private bool AboutCanExecute() => true;
+        private bool AboutCanExecute(object param) => true;
     }
 }

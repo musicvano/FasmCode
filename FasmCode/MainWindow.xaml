@@ -4,14 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FasmCode"
+        xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
         xmlns:intr="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:vm="clr-namespace:FasmCode.ViewModels"
         mc:Ignorable="d"
         Title="Fasm Code" Height="350" Width="525" WindowStartupLocation="CenterScreen">
     <Window.DataContext>
-        <vm:MainViewModel Window="{x:Reference Name = mainWindow}"/>
+        <vm:MainViewModel/>
     </Window.DataContext>
-    
+
     <intr:Interaction.Triggers>
         <intr:EventTrigger EventName="Loaded">
             <intr:InvokeCommandAction Command="{Binding WindowLoaded}"/>
@@ -19,7 +20,7 @@
     </intr:Interaction.Triggers>
 
     <DockPanel>
-        <Menu DockPanel.Dock="Top">
+        <Menu DockPanel.Dock="Top" Background="WhiteSmoke">
             <MenuItem Header="_File">
                 <MenuItem Header="_New File..."
                           Command="{Binding NewCommand}"
@@ -205,6 +206,7 @@
                 </MenuItem>
                 <MenuItem Header="_About Fasm Code"
                           Command="{Binding AboutCommand}"
+                          CommandParameter="{x:Reference Name=mainWindow}"
                           InputGestureText="{Binding Settings.Keymap.About}">
                     <MenuItem.Icon>
                         <Image Source="Icons/Info.png"/>
@@ -213,8 +215,8 @@
             </MenuItem>
         </Menu>
 
-        <ToolBarTray DockPanel.Dock="Top">
-            <ToolBar>
+        <ToolBarTray DockPanel.Dock="Top" Background="WhiteSmoke" IsLocked="True">
+            <ToolBar Background="WhiteSmoke">
                 <Button Command="{Binding NewCommand}"
                         ToolTip="New">
                     <Image Source="Icons/New.png"/>
@@ -260,7 +262,7 @@
             </ToolBar>
         </ToolBarTray>
 
-        <StatusBar DockPanel.Dock="Bottom">
+        <StatusBar DockPanel.Dock="Bottom" Background="WhiteSmoke">
             <StatusBar.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Grid>
@@ -294,20 +296,65 @@
             </StatusBarItem>
         </StatusBar>
 
-        <Grid DockPanel.Dock="Bottom">
+        <Grid DockPanel.Dock="Bottom" Background="WhiteSmoke">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="1"/>
                 <RowDefinition Height="100"/>
             </Grid.RowDefinitions>
-            <TabControl Grid.Row="0" Name="tabControl"/>
+            <TabControl Grid.Row="0"
+                        Name="tabControlSources"
+                        Background="WhiteSmoke"
+                        ItemsSource="{Binding Sources}" SelectedIndex="{Binding SelectedSourceIndex}">
+                <TabControl.ItemTemplate>
+                    <DataTemplate>
+                        <DockPanel>
+                            <TextBlock Text="{Binding ShortFileName}" ToolTip="{Binding Document.FileName}"/>
+                            <Button x:Name="btn"
+                                    Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CloseCommand}"
+                                    CommandParameter="{Binding}"
+                                    Margin="5,0,0,0"
+                                    Padding="3,0,3,0"
+                                    BorderThickness="0"
+                                    Background="Transparent">
+                                <Path Data="M1,9 L9,1 M1,1 L9,9" StrokeThickness="1">
+                                    <Path.Style>
+                                        <Style TargetType="{x:Type Path}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding ElementName=btn, Path=IsMouseOver}" Value="False">
+                                                    <Setter Property="Stroke" Value="LightGray" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding ElementName=btn, Path=IsMouseOver}" Value="True">
+                                                    <Setter Property="Stroke" Value="Black" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Path.Style>
+                                </Path>
+                            </Button>
+                        </DockPanel>
+                    </DataTemplate>
+                </TabControl.ItemTemplate>
+                <TabControl.ContentTemplate>
+                    <DataTemplate>
+                        <avalonEdit:TextEditor
+                            FontFamily="Consolas"
+                            FontSize="10pt"
+                            SyntaxHighlighting="C#"
+                            HorizontalScrollBarVisibility="Auto"
+                            VerticalScrollBarVisibility="Auto"
+                            Document="{Binding Document}">
+                        </avalonEdit:TextEditor>
+                    </DataTemplate>
+                </TabControl.ContentTemplate>
+            </TabControl>
             <GridSplitter Grid.Row="1" Height="1" HorizontalAlignment="Stretch"  VerticalAlignment="Center"/>
-            <TabControl Grid.Row="2" TabStripPlacement="Bottom">
+            <TabControl Grid.Row="2" TabStripPlacement="Bottom" Background="WhiteSmoke">
                 <TabItem Header="Output">
                     <TextBlock Text="Compilation..."/>
+
                 </TabItem>
             </TabControl>
-            
         </Grid>
     </DockPanel>
 </Window>
