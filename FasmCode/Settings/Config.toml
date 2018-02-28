@@ -1,5 +1,6 @@
 ﻿# Main configuration file
 
-Theme = "Fasm Code"
-Keymap = "Fasm Code"
-Compiler = "Fasm.exe"
+Theme = "Default"
+Keymap = "Default"
+Compiler = "fasm.exe"
+Include = "Include"

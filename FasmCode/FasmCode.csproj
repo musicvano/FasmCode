@@ -116,10 +116,10 @@
     <None Include="Settings\Config.toml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Settings\Keymaps\Fasm Code.toml">
+    <None Include="Settings\Keymaps\Default.toml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Settings\Themes\Fasm Code.toml">
+    <None Include="Settings\Themes\Default.toml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />

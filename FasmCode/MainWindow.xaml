@@ -340,10 +340,10 @@
                         <avalonEdit:TextEditor
                             FontFamily="Consolas"
                             FontSize="10pt"
-                            SyntaxHighlighting="C#"
                             HorizontalScrollBarVisibility="Auto"
                             VerticalScrollBarVisibility="Auto"
-                            Document="{Binding Document}">
+                            Document="{Binding Document}"
+                            SyntaxHighlighting="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.Settings.Highlighting}">
                         </avalonEdit:TextEditor>
                     </DataTemplate>
                 </TabControl.ContentTemplate>

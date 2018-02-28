@@ -53,6 +53,7 @@ namespace FasmCode.ViewModels
         public InputBindingCollection KeyBindings { get; set; }
         public ObservableCollection<SourceViewModel> Sources { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
+       
 
         private int selectedSourceIndex;
 
@@ -153,37 +154,7 @@ namespace FasmCode.ViewModels
 
         private void WindowLoadedExecute(object param)
         {
-            using (XmlTextReader reader = new XmlTextReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("FasmCode.Syntax.Fasm.xshd")))
-            {
-                XshdSyntaxDefinition syntax = HighlightingLoader.LoadXshd(reader);
-                foreach (var element in syntax.Elements)
-                {
-                    if (element is XshdColor)
-                    {
-                        var xshdColor = element as XshdColor;
-                        switch (xshdColor.Name)
-                        {
-                            case "Comment":
-                                break;
-                            case "String":
-                                break;
-                            case "Number":
-                                break;
-                            case "SizeOperator":
-                                break;
-                            case "Register":
-                                var c = (Color)ColorConverter.ConvertFromString("#FFFFFF00");
-                                xshdColor.Background = new SimpleHighlightingBrush(c /*Color.FromScRgb(1.0f, 0.9f, 0.9f, 0.3f)*/);
-                                break;
-                            case "Instruction":
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                }
-                //Window.textEditor.SyntaxHighlighting = HighlightingLoader.Load(syntax, HighlightingManager.Instance);
-            }
+            
         }
 
         private void NewExecute(object param)
