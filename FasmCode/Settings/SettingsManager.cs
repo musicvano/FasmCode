@@ -71,5 +71,10 @@ namespace FasmCode.Settings
                 Highlighting = HighlightingLoader.Load(syntax, HighlightingManager.Instance);
             }
         }
+
+        public void Save()
+        {
+            Toml.WriteFile(Config, Path.Combine(RootFolder, ConfigFile));
+        }
     }
 }

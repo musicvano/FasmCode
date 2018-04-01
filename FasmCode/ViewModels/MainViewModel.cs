@@ -1,17 +1,13 @@
 ﻿using FasmCode.Commands;
 using FasmCode.Settings;
-using ICSharpCode.AvalonEdit.Highlighting;
-using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
-using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Xml;
 
 namespace FasmCode.ViewModels
 {
@@ -19,6 +15,7 @@ namespace FasmCode.ViewModels
     {
         public SettingsManager Settings { get; set; }
         public ICommand WindowLoaded { get; set; }
+        public ICommand WindowClosed { get; set; }
 
         public ICommand NewCommand { get; set; }
         public ICommand OpenCommand { get; set; }
@@ -84,6 +81,7 @@ namespace FasmCode.ViewModels
         private void CreateCommands()
         {
             WindowLoaded = new RelayCommand(WindowLoadedExecute, param => true);
+            WindowClosed = new RelayCommand(WindowClosedExecute, param => true);
             NewCommand = new RelayCommand(NewExecute, NewCanExecute);
             OpenCommand = new RelayCommand(OpenExecute, OpenCanExecute);
             OpenFolderCommand = new RelayCommand(OpenFolderExecute, OpenFolderCanExecute);
@@ -154,7 +152,12 @@ namespace FasmCode.ViewModels
 
         private void WindowLoadedExecute(object param)
         {
-            
+
+        }
+
+        private void WindowClosedExecute(object param)
+        {
+            Settings.Save();
         }
 
         private void NewExecute(object param)
@@ -281,7 +284,7 @@ namespace FasmCode.ViewModels
 
         private void ExitExecute(object param)
         {
-
+            System.Windows.Application.Current.Shutdown();
         }
 
         private bool ExitCanExecute(object param) => true;
@@ -354,25 +357,31 @@ namespace FasmCode.ViewModels
 
         }
 
-        private bool CompileCanExecute(object param) => true;
+        private bool CompileCanExecute(object param)
+        {
+            return Sources.Count > 0;
+        }
 
         private void RunExecute(object param)
         {
 
         }
 
-        private bool RunCanExecute(object param) => true;
+        private bool RunCanExecute(object param)
+        {
+            return Sources.Count > 0;
+        }
 
         private void TerminalExecute(object param)
         {
-
+            Process.Start("cmd");
         }
 
         private bool TerminalCanExecute(object param) => true;
 
         private void CalculatorExecute(object param)
         {
-
+            Process.Start("calc");
         }
 
         private bool CalculatorCanExecute(object param) => true;

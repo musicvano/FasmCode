@@ -18,7 +18,7 @@ namespace FasmCode
         private void TextEditor_Loaded(object sender, RoutedEventArgs e)
         {
             var editor = sender as ICSharpCode.AvalonEdit.TextEditor;
-            editor.Text = editor.Tag as string;
+            editor.Text = editor.Tag as string;            
         }
     }
 }

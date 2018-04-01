@@ -8,7 +8,12 @@
         xmlns:intr="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:vm="clr-namespace:FasmCode.ViewModels"
         mc:Ignorable="d"
-        Title="Fasm Code" Height="350" Width="525" WindowStartupLocation="CenterScreen">
+        Title="Fasm Code"
+        Left="{Binding Settings.Config.Left, Mode=TwoWay}"
+        Top="{Binding Settings.Config.Top, Mode=TwoWay}"
+        Width="{Binding Settings.Config.Width, Mode=TwoWay}"
+        Height="{Binding Settings.Config.Height, Mode=TwoWay}"
+        WindowState="{Binding Settings.Config.WindowState, Mode=TwoWay}">
     <Window.DataContext>
         <vm:MainViewModel/>
     </Window.DataContext>
@@ -16,6 +21,9 @@
     <intr:Interaction.Triggers>
         <intr:EventTrigger EventName="Loaded">
             <intr:InvokeCommandAction Command="{Binding WindowLoaded}"/>
+        </intr:EventTrigger>
+        <intr:EventTrigger EventName="Closing">
+            <intr:InvokeCommandAction Command="{Binding WindowClosed}"/>
         </intr:EventTrigger>
     </intr:Interaction.Triggers>
 
@@ -340,6 +348,7 @@
                         <avalonEdit:TextEditor
                             FontFamily="Consolas"
                             FontSize="10pt"
+                            ShowLineNumbers="True"
                             HorizontalScrollBarVisibility="Auto"
                             VerticalScrollBarVisibility="Auto"
                             Document="{Binding Document}"
