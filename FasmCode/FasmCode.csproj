@@ -68,12 +68,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\SourceViewModel.cs" />
-    <Page Include="AboutWindow.xaml">
+    <Page Include="Views\AboutWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -82,7 +83,7 @@
     <Compile Include="Settings\SettingsManager.cs" />
     <Compile Include="Models\Keymap.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="AboutWindow.xaml.cs">
+    <Compile Include="Views\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="App.xaml.cs">
@@ -90,7 +91,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Commands\RelayCommand.cs" />
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
@@ -133,41 +134,39 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icons\Redo.png" />
-    <Resource Include="Icons\Undo.png" />
+    <Resource Include="Views\Icons\Redo.png" />
+    <Resource Include="Views\Icons\Undo.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icons\Close.png" />
-    <Resource Include="Icons\Compile.png" />
-    <Resource Include="Icons\Copy.png" />
-    <Resource Include="Icons\Cut.png" />
-    <Resource Include="Icons\Delete.png" />
-    <Resource Include="Icons\Exit.png" />
-    <Resource Include="Icons\Folder.png" />
-    <Resource Include="Icons\New.png" />
-    <Resource Include="Icons\Settings.png" />
-    <Resource Include="Icons\Paste.png" />
-    <Resource Include="Icons\Run.png" />
-    <Resource Include="Icons\Save.png" />
-    <Resource Include="Icons\SaveAll.png" />
-    <Resource Include="Icons\SaveAs.png" />
+    <Resource Include="Views\Icons\Close.png" />
+    <Resource Include="Views\Icons\Compile.png" />
+    <Resource Include="Views\Icons\Copy.png" />
+    <Resource Include="Views\Icons\Cut.png" />
+    <Resource Include="Views\Icons\Delete.png" />
+    <Resource Include="Views\Icons\Exit.png" />
+    <Resource Include="Views\Icons\Folder.png" />
+    <Resource Include="Views\Icons\New.png" />
+    <Resource Include="Views\Icons\Settings.png" />
+    <Resource Include="Views\Icons\Paste.png" />
+    <Resource Include="Views\Icons\Run.png" />
+    <Resource Include="Views\Icons\Save.png" />
+    <Resource Include="Views\Icons\SaveAll.png" />
+    <Resource Include="Views\Icons\SaveAs.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icons\Find.png" />
-    <Resource Include="Icons\Help.png" />
-    <Resource Include="Icons\Info.png" />
-    <Resource Include="Icons\Replace.png" />
-    <Resource Include="Icons\SelectAll.png" />
+    <Resource Include="Views\Icons\Find.png" />
+    <Resource Include="Views\Icons\Help.png" />
+    <Resource Include="Views\Icons\Info.png" />
+    <Resource Include="Views\Icons\Replace.png" />
+    <Resource Include="Views\Icons\SelectAll.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icons\Calc.png" />
-    <Resource Include="Icons\Terminal.png" />
+    <Resource Include="Views\Icons\Calc.png" />
+    <Resource Include="Views\Icons\Terminal.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Logo.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
