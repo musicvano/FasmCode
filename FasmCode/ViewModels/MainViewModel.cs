@@ -1,11 +1,12 @@
 ﻿using FasmCode.Commands;
 using FasmCode.Settings;
+using FasmCode.Views;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
-using System.Windows;
+//using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
 
@@ -220,7 +221,7 @@ namespace FasmCode.ViewModels
 
         private void SaveExecute(object param)
         {
-
+            SelectedSource.Save();
         }
 
         private bool SaveCanExecute(object param)
@@ -253,12 +254,8 @@ namespace FasmCode.ViewModels
         private void SaveAllExecute(object param)
         {
             foreach (var source in Sources)
-            {
-                using (var writer = new StreamWriter(source.Document.FileName))
-                {
-                    writer.Write(source.Document.Text);
-                }
-            }
+                if (source.IsModified)
+                    source.Save();
         }
 
         private bool SaveAllCanExecute(object param)
@@ -268,17 +265,29 @@ namespace FasmCode.ViewModels
 
         private void CloseExecute(object parameter)
         {
-            if (parameter is SourceViewModel)
+            var source = parameter is SourceViewModel ?
+                parameter as SourceViewModel :
+                SelectedSource;
+            if (!source.IsModified)
             {
-                Sources.Remove(parameter as SourceViewModel);
+                // TODO: set owner window
+                var result = System.Windows.MessageBox.Show(
+                    $"Save changes to the file?\n{source.Document.FileName}",
+                    "Fasm Code",
+                    System.Windows.MessageBoxButton.YesNoCancel,
+                    System.Windows.MessageBoxImage.Question);
+                if (result == System.Windows.MessageBoxResult.OK)
+                    source.Save();
+                if (result == System.Windows.MessageBoxResult.Cancel)
+                    return;
             }
-            else
-            {
-                Sources.RemoveAt(SelectedSourceIndex);
-            }
+            Sources.Remove(source);
         }
 
-        private bool CloseCanExecute(object param) => true;
+        private bool CloseCanExecute(object param)
+        {
+            return Sources.Count > 0;
+        }
 
         private void CloseFolderExecute(object param)
         {
@@ -393,23 +402,25 @@ namespace FasmCode.ViewModels
 
         private void SettingsExecute(object param)
         {
-
+            var window = new SettingsWindow();
+            window.Owner = param as System.Windows.Window;
+            window.ShowDialog();
         }
 
         private bool SettingsCanExecute(object param) => true;
 
         private void HelpExecute(object param)
         {
-
+            Process.Start("https://github.com/musicvano/fasmcode");
         }
 
         private bool HelpCanExecute(object param) => true;
 
         private void AboutExecute(object param)
         {
-            AboutWindow aboutWindow = new AboutWindow();
-            aboutWindow.Owner = param as Window;
-            aboutWindow.ShowDialog();
+            var window = new AboutWindow();
+            window.Owner = param as System.Windows.Window;
+            window.ShowDialog();
         }
 
         private bool AboutCanExecute(object param) => true;

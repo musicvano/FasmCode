@@ -3,12 +3,18 @@ using System.IO;
 
 namespace FasmCode.ViewModels
 {
+    // Represents the tab of source code in the editor
     public class SourceViewModel
     {
-        // The document for AvalonEditor
+        public SourceViewModel()
+        {
+            Document = new TextDocument();
+        }
+
+        // The document of the AvalonEditor
         public TextDocument Document { get; set; }
 
-        // Returns true if document has been modified
+        // Returns true if the document has been modified
         public bool IsModified { get; set; }
 
         // Returns file name and extention without full path
@@ -18,11 +24,6 @@ namespace FasmCode.ViewModels
             {
                 return Path.GetFileName(Document.FileName);
             }
-        }
-
-        public SourceViewModel()
-        {
-            Document = new TextDocument();
         }
 
         // Saves the document to file using early specified location

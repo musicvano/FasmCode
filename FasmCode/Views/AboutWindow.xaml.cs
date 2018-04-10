@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Windows;
 
-namespace FasmCode
+namespace FasmCode.Views
 {
     /// <summary>
     /// Interaction logic for AboutWindow.xaml

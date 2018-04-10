@@ -1,7 +1,7 @@
 ﻿using FasmCode.ViewModels;
 using System.Windows;
 
-namespace FasmCode
+namespace FasmCode.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

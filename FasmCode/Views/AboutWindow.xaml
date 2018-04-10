@@ -1,10 +1,10 @@
-﻿<Window x:Class="FasmCode.AboutWindow"
+﻿<Window x:Class="FasmCode.Views.AboutWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:FasmCode.ViewModels"
-        xmlns:local="clr-namespace:FasmCode"        
+        xmlns:local="clr-namespace:FasmCode.Views"        
         mc:Ignorable="d"
         Title="About Fasm Code" Height="250" Width="300"
         WindowStartupLocation="CenterOwner" WindowStyle="ThreeDBorderWindow" ResizeMode="NoResize" Icon="Icons/Info.png">
