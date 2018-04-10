@@ -64,6 +64,14 @@ namespace FasmCode.ViewModels
                 OnPropertyChanged();
             }
         }
+        
+        public SourceViewModel SelectedSource
+        {
+            get
+            {
+                return Sources[SelectedSourceIndex];
+            }
+        }
 
         internal void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -222,7 +230,7 @@ namespace FasmCode.ViewModels
 
         private void SaveAsExecute(object param)
         {
-            var source = Sources[SelectedSourceIndex];
+            var source = SelectedSource;
             SaveFileDialog dialog = new SaveFileDialog
             {
                 Title = "Save File As",
@@ -233,10 +241,7 @@ namespace FasmCode.ViewModels
             };
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                using (var writer = new StreamWriter(dialog.FileName))
-                {
-                    writer.Write(source.Document.Text);
-                }
+                source.SaveAs(dialog.FileName);
             }
         }
 
