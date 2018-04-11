@@ -1,10 +1,11 @@
 ﻿using FasmCode.Commands;
 using FasmCode.Settings;
 using FasmCode.Views;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using System.Windows.Input;
@@ -53,6 +54,8 @@ namespace FasmCode.ViewModels
         // Application settings (hot keys, themes, general configurations)
         public SettingsManager Settings { get; set; }
 
+        public ProjectViewModel Project { get; set; }
+
         // Collection of view models for all sources
         public ObservableCollection<SourceViewModel> Sources { get; set; }
 
@@ -86,6 +89,7 @@ namespace FasmCode.ViewModels
             Settings = new SettingsManager();
             CreateCommands();
             CreateKeyBindings();
+            Project = new ProjectViewModel();
             Sources = new ObservableCollection<SourceViewModel>();
         }
 
@@ -177,11 +181,10 @@ namespace FasmCode.ViewModels
             };
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                var source = new SourceViewModel();
-                source.Document.FileName = dialog.FileName;
+                var source = new SourceViewModel(dialog.FileName);
                 Sources.Add(source);
                 SelectedSourceIndex = Sources.Count - 1;
-                File.Create(dialog.FileName).Close();
+                //File.Create(dialog.FileName).Close();
             }
         }
 
@@ -195,14 +198,15 @@ namespace FasmCode.ViewModels
             };
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                using (var reader = new StreamReader(dialog.FileName))
-                {
-                    var source = new SourceViewModel();
-                    source.Document.FileName = dialog.FileName;
-                    source.Document.Text = reader.ReadToEnd();
-                    Sources.Add(source);
-                    SelectedSourceIndex = Sources.Count - 1;
-                }
+                for(int i = 0; i < Sources.Count; i++)
+                    if (string.Equals(Sources[i].Document.FileName, dialog.FileName, StringComparison.OrdinalIgnoreCase))
+                    {
+                        SelectedSourceIndex = i;
+                        return;
+                    }
+                var source = new SourceViewModel(dialog.FileName);
+                Sources.Add(source);
+                SelectedSourceIndex = Sources.Count - 1;
             }
         }
 

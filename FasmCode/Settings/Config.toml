@@ -1,6 +1,7 @@
 ﻿# Main configuration file
 
 Theme = "Default"
+ShowLineNumbers = true
 Keymap = "Default"
 Compiler = "fasm.exe"
 Include = "Include"
@@ -9,3 +10,5 @@ Top = 200.0
 Width = 500.0
 Height = 350.0
 WindowSate = 0
+LeftPanelWidth = 120.0
+BottomPanelHeight = 100.0

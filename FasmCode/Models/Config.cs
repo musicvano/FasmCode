@@ -11,6 +11,9 @@ namespace FasmCode.Models
         // Current theme file
         public string Theme { get; set; }
 
+        // If true the editor shows line numbers
+        public bool ShowLineNumbers { get; set; }
+
         // Path from the root application folder to the compiler executable
         public string Compiler { get; set; }
 
@@ -29,5 +32,10 @@ namespace FasmCode.Models
         // State of the main window
         public WindowState WindowState { get; set; }
 
+        // Width of the tree view panel
+        public double LeftPanelWidth { get; set; }
+
+        // Height of the bootom output panel
+        public double BottomPanelHeight { get; set; }
     }
 }

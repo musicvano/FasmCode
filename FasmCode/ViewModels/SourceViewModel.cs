@@ -6,9 +6,15 @@ namespace FasmCode.ViewModels
     // Represents the tab of source code in the editor
     public class SourceViewModel
     {
-        public SourceViewModel()
+        // Creates source view model by reading content from the file
+        public SourceViewModel(string fileName)
         {
             Document = new TextDocument();
+            Document.FileName = fileName;
+            using (StreamReader reader = new StreamReader(fileName))
+            {
+                Document.Text = reader.ReadToEnd();
+            }
         }
 
         // The document of the AvalonEditor

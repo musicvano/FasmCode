@@ -1,5 +1,7 @@
 ﻿using FasmCode.ViewModels;
+using ICSharpCode.AvalonEdit.Editing;
 using System.Windows;
+using System.Windows.Shapes;
 
 namespace FasmCode.Views
 {
@@ -19,7 +21,22 @@ namespace FasmCode.Views
         private void TextEditor_Loaded(object sender, RoutedEventArgs e)
         {
             var editor = sender as ICSharpCode.AvalonEdit.TextEditor;
-            editor.Text = editor.Tag as string;            
+            foreach (var item in editor.TextArea.LeftMargins)
+                if (item is Line)
+                {
+                    var lineNumberMargin = item as Line;
+                    lineNumberMargin.Margin = new Thickness(10, 0, 10, 0);
+                    break;
+                }
+        }
+
+        private void treeView_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (leftColumn.Width.Value > 0)
+            {
+                var viewModel = (MainViewModel)DataContext;
+                viewModel.Settings.Config.LeftPanelWidth = leftColumn.Width.Value;
+            }
         }
     }
 }
