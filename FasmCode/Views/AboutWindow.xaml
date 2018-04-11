@@ -39,6 +39,6 @@
                 </Hyperlink>
             </TextBlock>
         </StackPanel>
-        <Button Grid.Row="1" Grid.Column="1" Width="70" Height="22" Content="OK" HorizontalAlignment="Right" Margin="0,0,20,20" Click="ButtonOK_Click"/>
+        <Button Grid.Row="1" Grid.Column="1" Width="70" Height="22" Content="OK" HorizontalAlignment="Right" Margin="0,0,15,15" Click="ButtonOK_Click"/>
     </Grid>
 </Window>

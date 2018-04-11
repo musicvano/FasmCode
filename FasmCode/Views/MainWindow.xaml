@@ -305,48 +305,63 @@
             </StatusBarItem>
         </StatusBar>
 
+
         <Grid DockPanel.Dock="Bottom" Background="WhiteSmoke">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="1"/>
                 <RowDefinition Height="100"/>
             </Grid.RowDefinitions>
-            <TabControl Grid.Row="0"
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="1"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TreeView Grid.Column="0">
+                    <TreeViewItem Header="Folder 1">
+                        <TreeViewItem Header="File 1"></TreeViewItem>
+                        <TreeViewItem Header="File 2"></TreeViewItem>
+                        <TreeViewItem Header="File 3"></TreeViewItem>
+                    </TreeViewItem>
+                </TreeView>
+                <GridSplitter Grid.Column="1" Width="1" VerticalAlignment="Stretch"  HorizontalAlignment="Center"/>
+                <TabControl Grid.Column="2"
                         Name="tabControlSources"
                         Background="WhiteSmoke"
                         ItemsSource="{Binding Sources}" SelectedIndex="{Binding SelectedSourceIndex}">
-                <TabControl.ItemTemplate>
-                    <DataTemplate>
-                        <DockPanel>
-                            <TextBlock Text="{Binding ShortFileName}" ToolTip="{Binding Document.FileName}"/>
-                            <Button x:Name="btn"
+                    <TabControl.ItemTemplate>
+                        <DataTemplate>
+                            <DockPanel>
+                                <TextBlock Text="{Binding ShortFileName}" ToolTip="{Binding Document.FileName}"/>
+                                <Button x:Name="btn"
                                     Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CloseCommand}"
                                     CommandParameter="{Binding}"
                                     Margin="5,0,0,0"
                                     Padding="3,0,3,0"
                                     BorderThickness="0"
                                     Background="Transparent">
-                                <Path Data="M1,9 L9,1 M1,1 L9,9" StrokeThickness="1">
-                                    <Path.Style>
-                                        <Style TargetType="{x:Type Path}">
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding ElementName=btn, Path=IsMouseOver}" Value="False">
-                                                    <Setter Property="Stroke" Value="LightGray" />
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{Binding ElementName=btn, Path=IsMouseOver}" Value="True">
-                                                    <Setter Property="Stroke" Value="Black" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Path.Style>
-                                </Path>
-                            </Button>
-                        </DockPanel>
-                    </DataTemplate>
-                </TabControl.ItemTemplate>
-                <TabControl.ContentTemplate>
-                    <DataTemplate>
-                        <avalonEdit:TextEditor
+                                    <Path Data="M1,9 L9,1 M1,1 L9,9" StrokeThickness="1">
+                                        <Path.Style>
+                                            <Style TargetType="{x:Type Path}">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding ElementName=btn, Path=IsMouseOver}" Value="False">
+                                                        <Setter Property="Stroke" Value="LightGray" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding ElementName=btn, Path=IsMouseOver}" Value="True">
+                                                        <Setter Property="Stroke" Value="Black" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Path.Style>
+                                    </Path>
+                                </Button>
+                            </DockPanel>
+                        </DataTemplate>
+                    </TabControl.ItemTemplate>
+                    <TabControl.ContentTemplate>
+                        <DataTemplate>
+                            <avalonEdit:TextEditor
                             FontFamily="Consolas"
                             FontSize="10pt"
                             ShowLineNumbers="True"
@@ -354,10 +369,14 @@
                             VerticalScrollBarVisibility="Auto"
                             Document="{Binding Document}"
                             SyntaxHighlighting="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.Settings.Highlighting}">
-                        </avalonEdit:TextEditor>
-                    </DataTemplate>
-                </TabControl.ContentTemplate>
-            </TabControl>
+                            </avalonEdit:TextEditor>
+                        </DataTemplate>
+                    </TabControl.ContentTemplate>
+                </TabControl>
+
+            </Grid>
+
+
             <GridSplitter Grid.Row="1" Height="1" HorizontalAlignment="Stretch"  VerticalAlignment="Center"/>
             <TabControl Grid.Row="2" TabStripPlacement="Bottom" Background="WhiteSmoke">
                 <TabItem Header="Output">

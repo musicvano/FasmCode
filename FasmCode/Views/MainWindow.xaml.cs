@@ -12,6 +12,7 @@ namespace FasmCode.Views
         {
             InitializeComponent();
             var viewModel = (MainViewModel)DataContext;
+            viewModel.Window = this;
             InputBindings.AddRange(viewModel.KeyBindings);
         }
 
