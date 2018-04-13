@@ -68,6 +68,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\FileItem.cs" />
+    <Compile Include="Models\FolderItem.cs" />
+    <Compile Include="Models\Item.cs" />
     <Compile Include="Utils\GridLengthConverter.cs" />
     <Compile Include="Utils\VisibilityConverter.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
@@ -180,6 +183,8 @@
   <ItemGroup>
     <Resource Include="Logo.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Views\Icons\Asm.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

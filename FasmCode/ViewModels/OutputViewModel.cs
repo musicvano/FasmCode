@@ -2,10 +2,25 @@
 
 namespace FasmCode.ViewModels
 {
+    /// <summary>
+    /// Represents an output message panel
+    /// </summary>
     class OutputViewModel : BaseViewModel
     {
-        // Defines the visibility of the bottom output panel
+        /// <summary>
+        /// Creates a new OutputViewModel instance
+        /// </summary>
+        public OutputViewModel()
+        {
+            visibility = Visibility.Visible;
+            text = "Compilation...";
+        }
+
         private Visibility visibility;
+
+        /// <summary>
+        /// Defines the visibility of the bottom output panel
+        /// </summary>
         public Visibility Visibility
         {
             get { return visibility; }
@@ -17,12 +32,25 @@ namespace FasmCode.ViewModels
             }
         }
 
-        public OutputViewModel()
+        private string text;
+
+        /// <summary>
+        /// Contains the text for output
+        /// </summary>
+        public string Text
         {
-            visibility = Visibility.Visible;
+            get { return text; }
+            set
+            {
+                if (value == text) return;
+                text = value;
+                OnPropertyChanged();
+            }
         }
 
-        // Toggles visibility of the panel
+        /// <summary>
+        /// Toggles visibility of the panel
+        /// </summary>
         public void Toggle()
         {
             Visibility = visibility == Visibility.Visible

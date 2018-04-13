@@ -1,6 +1,8 @@
 ﻿namespace FasmCode.Models
 {
-    // Contains shortcuts for all application commands
+    /// <summary>
+    /// Contains shortcuts for all application commands
+    /// </summary>
     class Keymap
     {
         public string New { get; set; }

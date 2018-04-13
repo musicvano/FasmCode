@@ -13,6 +13,19 @@ namespace FasmCode.ViewModels
 {
     class MainViewModel : BaseViewModel
     {
+        /// <summary>
+        /// Creates a new MainViewModel instance
+        /// </summary>
+        public MainViewModel()
+        {
+            Settings = new SettingsManager();
+            CreateCommands();
+            CreateKeyBindings();
+            Folder = new FolderViewModel();
+            Output = new OutputViewModel();
+            Sources = new ObservableCollection<SourceViewModel>();
+        }
+
         // All commands of the application
         public ICommand WindowLoaded { get; set; }
         public ICommand WindowClosed { get; set; }
@@ -42,26 +55,39 @@ namespace FasmCode.ViewModels
         public ICommand HelpCommand { get; set; }
         public ICommand AboutCommand { get; set; }
 
-        // Collection of all key bindings
+        /// <summary>
+        /// Collection of all key bindings
+        /// </summary>
         public InputBindingCollection KeyBindings { get; set; }
 
-        // Reference to the main window
+        /// <summary>
+        /// Reference to the main window
+        /// </summary>
         public System.Windows.Window Window { get; set; }
 
         // Application settings (hot keys, themes, general configurations)
         public SettingsManager Settings { get; set; }
 
-        // Represents the left panel with the folder structure
+        /// <summary>
+        /// Represents the left panel with the folder structure
+        /// </summary>
         public FolderViewModel Folder { get; set; }
 
-        // Represents the bottom panel with the output information
+        /// <summary>
+        /// Represents the bottom panel with the output information
+        /// </summary>
         public OutputViewModel Output { get; set; }
 
-        // Collection of view models for all sources
+        /// <summary>
+        /// Collection of view models for all sources
+        /// </summary>
         public ObservableCollection<SourceViewModel> Sources { get; set; }
 
-        // Index of active source view model
         private int selectedSourceIndex;
+
+        /// <summary>
+        /// Index of active source view model
+        /// </summary>
         public int SelectedSourceIndex
         {
             get { return selectedSourceIndex; }
@@ -73,23 +99,17 @@ namespace FasmCode.ViewModels
             }
         }
 
-        // Returns the active source view model
+        /// <summary>
+        /// Returns the active source view model
+        /// </summary>
         public SourceViewModel SelectedSource
         {
             get { return Sources[SelectedSourceIndex]; }
         }
 
-        public MainViewModel()
-        {
-            Settings = new SettingsManager();
-            CreateCommands();
-            CreateKeyBindings();
-            Folder = new FolderViewModel();
-            Output = new OutputViewModel();
-            Sources = new ObservableCollection<SourceViewModel>();
-        }
-
-        // Initializes all commands of the application
+        /// <summary>
+        /// Initializes all commands of the application
+        /// </summary>
         private void CreateCommands()
         {
             WindowLoaded = new RelayCommand(WindowLoadedExecute, param => true);
@@ -121,7 +141,9 @@ namespace FasmCode.ViewModels
             AboutCommand = new RelayCommand(AboutExecute, AboutCanExecute);
         }
 
-        // Initializes all hot key of the application
+        /// <summary>
+        /// Initializes all hot key of the application
+        /// </summary>
         private void CreateKeyBindings()
         {
             KeyGestureConverter converter = new KeyGestureConverter();

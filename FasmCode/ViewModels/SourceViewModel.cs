@@ -3,10 +3,14 @@ using System.IO;
 
 namespace FasmCode.ViewModels
 {
-    // Represents the tab of source code in the editor
-    class SourceViewModel: BaseViewModel
+    /// <summary>
+    /// Represents the tab of source code in the editor
+    /// </summary>
+    class SourceViewModel : BaseViewModel
     {
-        // Creates source view model by reading content from the file
+        /// <summary>
+        /// Creates source view model by reading content from the file
+        /// </summary>
         public SourceViewModel(string fileName)
         {
             Document = new TextDocument();
@@ -24,10 +28,14 @@ namespace FasmCode.ViewModels
             }
         }
 
-        // The document of the AvalonEditor
+        /// <summary>
+        /// The document of the AvalonEditor 
+        /// </summary>
         public TextDocument Document { get; set; }
 
-        // Returns true if the document has been modified
+        /// <summary>
+        /// Returns true if the document has been modified
+        /// </summary>
         private bool isModified;
         public bool IsModified
         {
@@ -40,19 +48,25 @@ namespace FasmCode.ViewModels
             }
         }
 
-        // Returns file name and extention without full path
+        /// <summary>
+        /// Returns file name and extention without full path
+        /// </summary>
         public string ShortFileName
         {
             get { return Path.GetFileName(Document.FileName); }
         }
 
-        // Saves the document to file using early specified location
+        /// <summary>
+        /// Saves the document to file using early specified location
+        /// </summary>
         public void Save()
         {
             SaveAs(Document.FileName);
         }
 
-        // Saves the document to file
+        /// <summary>
+        /// Saves the document to file
+        /// </summary>
         public void SaveAs(string fileName)
         {
             using (StreamWriter writer = new StreamWriter(fileName))

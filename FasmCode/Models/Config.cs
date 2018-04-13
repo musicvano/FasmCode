@@ -1,42 +1,65 @@
-﻿using Nett;
-using System.ComponentModel;
-using System.Windows;
+﻿using System.Windows;
 
 namespace FasmCode.Models
 {
+    /// <summary>
+    /// Configurations of the application
+    /// </summary>
     class Config
     {
-        // Current keymap file
+        /// <summary>
+        /// Current keymap file without extention
+        /// </summary>
         public string Keymap { get; set; }
 
-        // Current theme file
+        /// <summary>
+        /// Current theme file without extention
+        /// </summary>
         public string Theme { get; set; }
 
-        // If true the editor shows line numbers
+        /// <summary>
+        /// If true the editor shows line numbers
+        /// </summary>
         public bool ShowLineNumbers { get; set; }
 
-        // Path from the root application folder to the compiler executable
+        /// <summary>
+        /// Path from the root application folder to the compiler executable
+        /// </summary>
         public string Compiler { get; set; }
 
-        // X-coordinate of the main window
+        /// <summary>
+        /// X-coordinate of the main window
+        /// </summary>
         public double Left { get; set; }
 
-        // Y-coordinate of the main window
+        /// <summary>
+        /// Y-coordinate of the main window
+        /// </summary>
         public double Top { get; set; }
 
-        // Width of the main window
+        /// <summary>
+        /// The width of the main window
+        /// </summary>
         public double Width { get; set; }
 
-        // Height of the main window
+        /// <summary>
+        /// The height of the main window
+        /// </summary>
         public double Height { get; set; }
 
-        // State of the main window
+        /// <summary>
+        /// State of the main window
+        /// </summary>
         public WindowState WindowState { get; set; }
 
-        // Width of the tree view panel
+        /// <summary>
+        /// The width of the tree view panel
+        /// </summary>
         public double LeftPanelWidth { get; set; }
 
-        // Height of the bootom output panel
+        /// <summary>
+        /// The height of the bootom output panel
+        /// </summary>
         public double BottomPanelHeight { get; set; }
     }
 }

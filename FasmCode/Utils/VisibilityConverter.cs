@@ -5,6 +5,9 @@ using System.Windows.Data;
 
 namespace FasmCode.Utils
 {
+    /// <summary>
+    /// The converter from Visibility to bool
+    /// </summary>
     public class VisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

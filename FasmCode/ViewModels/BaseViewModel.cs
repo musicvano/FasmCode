@@ -3,12 +3,16 @@ using System.Runtime.CompilerServices;
 
 namespace FasmCode.ViewModels
 {
-    // Implements the behaviour of the dependency property
+    /// <summary>
+    /// Implements the behaviour of the dependency property
+    /// </summary>
     class BaseViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        // Notifies bounded property about changes 
+        /// <summary>
+        /// Notifies bounded property about changes 
+        /// </summary>
         public void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
