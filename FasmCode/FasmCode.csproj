@@ -68,8 +68,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Utils\GridLengthConverter.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
-    <Compile Include="ViewModels\ProjectViewModel.cs" />
+    <Compile Include="ViewModels\FolderViewModel.cs" />
+    <Compile Include="ViewModels\OutputViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\SourceViewModel.cs" />
     <Compile Include="Views\SettingsWindow.xaml.cs">

@@ -54,7 +54,8 @@ namespace FasmCode.ViewModels
         // Application settings (hot keys, themes, general configurations)
         public SettingsManager Settings { get; set; }
 
-        public ProjectViewModel Project { get; set; }
+        public FolderViewModel Folder { get; set; }
+        public OutputViewModel Output { get; set; }
 
         // Collection of view models for all sources
         public ObservableCollection<SourceViewModel> Sources { get; set; }
@@ -89,7 +90,7 @@ namespace FasmCode.ViewModels
             Settings = new SettingsManager();
             CreateCommands();
             CreateKeyBindings();
-            Project = new ProjectViewModel();
+            Folder = new FolderViewModel();
             Sources = new ObservableCollection<SourceViewModel>();
         }
 
@@ -416,7 +417,7 @@ namespace FasmCode.ViewModels
         private bool HelpCanExecute(object param) => true;
 
         private void AboutExecute(object param)
-        {
+        {            
             var window = new AboutWindow();
             window.Owner = Window;
             window.ShowDialog();

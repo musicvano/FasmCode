@@ -3,10 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:FasmCode.Views"
-        xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
         xmlns:intr="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
+        xmlns:local="clr-namespace:FasmCode.Views"
         xmlns:vm="clr-namespace:FasmCode.ViewModels"
+        xmlns:utils="clr-namespace:FasmCode.Utils"
         mc:Ignorable="d"
         Title="Fasm Code"
         Left="{Binding Settings.Config.Left, Mode=TwoWay}"
@@ -17,6 +18,9 @@
     <Window.DataContext>
         <vm:MainViewModel/>
     </Window.DataContext>
+    <Window.Resources>
+        <utils:GridLengthConverter x:Key="gridLengthConverter" />
+    </Window.Resources>
 
     <intr:Interaction.Triggers>
         <intr:EventTrigger EventName="Loaded">
@@ -310,26 +314,45 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>                      
-            <Grid>
+                <RowDefinition>
+                    <RowDefinition.Style>
+                        <Style TargetType="{x:Type RowDefinition}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Output.Visibility}" Value="Visible">
+                                    <Setter Property="Height"
+                                        Value="{Binding Settings.Config.BottomPanelHeight, Mode=TwoWay,
+                                        Converter={StaticResource gridLengthConverter}}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Output.Visibility}" Value="Collapsed">
+                                    <Setter Property="Height" Value="Auto" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </RowDefinition.Style>
+                </RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition x:Name="leftColumn">
+                    <ColumnDefinition>
                         <ColumnDefinition.Style>
                             <Style TargetType="{x:Type ColumnDefinition}">
-                                <Setter Property="Width" Value="{Binding Settings.Config.LeftPanelWidth}" />
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Project.ShowTree, Mode=TwoWay}" Value="False">
-                                        <Setter Property="Width" Value="0" />
+                                    <DataTrigger Binding="{Binding Folder.Visibility}" Value="Visible">
+                                        <Setter Property="Width"
+                                            Value="{Binding Settings.Config.LeftPanelWidth, Mode=TwoWay,
+                                            Converter={StaticResource gridLengthConverter}}" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Folder.Visibility}" Value="Collapsed">
+                                        <Setter Property="Width" Value="Auto" />
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
                         </ColumnDefinition.Style>
                     </ColumnDefinition>
-                    <ColumnDefinition Width="2"/>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <TreeView x:Name="treeView" Grid.Column="0" SizeChanged="treeView_SizeChanged">
+                <TreeView Grid.Column="0" Visibility="{Binding Folder.Visibility}">
                     <TreeViewItem Header="Folder 1">
                         <TreeViewItem Header="File 1"></TreeViewItem>
                         <TreeViewItem Header="File 2"></TreeViewItem>
@@ -338,10 +361,10 @@
                 </TreeView>
                 <GridSplitter Grid.Column="1"
                               Width="2"
-                              Visibility="{Binding Project.ShowTree}"
+                              Visibility="{Binding Folder.Visibility}"
                               VerticalAlignment="Stretch"
                               HorizontalAlignment="Center"/>
-                <TabControl Grid.Column="3" MinWidth="200"
+                <TabControl Grid.Column="3"
                             Name="tabControlSources"
                             Background="WhiteSmoke"
                             ItemsSource="{Binding Sources}"
@@ -401,8 +424,15 @@
                     </TabControl.ContentTemplate>
                 </TabControl>
             </Grid>
-            <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch"  VerticalAlignment="Center"/>
-            <TabControl Grid.Row="2" TabStripPlacement="Bottom" Background="WhiteSmoke">
+            <GridSplitter Grid.Row="1"
+                          Height="2"
+                          HorizontalAlignment="Stretch"
+                          VerticalAlignment="Center"
+                          Visibility="{Binding Output.Visibility}"/>
+            <TabControl Grid.Row="2"
+                        TabStripPlacement="Bottom"
+                        Background="WhiteSmoke"
+                        Visibility="{Binding Output.Visibility}">
                 <TabItem Header="Output">
                     <TextBlock Text="Compilation..."/>
 

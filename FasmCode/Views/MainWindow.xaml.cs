@@ -29,14 +29,5 @@ namespace FasmCode.Views
                     break;
                 }
         }
-
-        private void treeView_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            if (leftColumn.Width.Value > 0)
-            {
-                var viewModel = (MainViewModel)DataContext;
-                viewModel.Settings.Config.LeftPanelWidth = leftColumn.Width.Value;
-            }
-        }
     }
 }
