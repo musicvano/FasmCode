@@ -66,6 +66,7 @@
     </Rule>
 
     <Keywords color="Keyword">
+      <Word>format</Word>
       <Word>entry</Word>
       <Word>include</Word>
       <Word>section</Word>

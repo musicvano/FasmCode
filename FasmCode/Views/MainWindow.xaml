@@ -20,6 +20,21 @@
     </Window.DataContext>
     <Window.Resources>
         <utils:GridLengthConverter x:Key="gridLengthConverter" />
+        <utils:VisibilityConverter x:Key="visibilityConverter" />
+        <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+            <Style.Triggers>
+                <Trigger Property="Orientation" Value="Horizontal">
+                    <Setter Property="Width" Value="Auto"/>
+                    <Setter Property="MinHeight" Value="10" />
+                    <Setter Property="Height" Value="10" />
+                </Trigger>
+                <Trigger Property="Orientation" Value="Vertical">
+                    <Setter Property="MinWidth" Value="10"/>
+                    <Setter Property="Width" Value="10"/>
+                    <Setter Property="Height" Value="Auto" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
 
     <intr:Interaction.Triggers>
@@ -165,6 +180,12 @@
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
+            <MenuItem Header="_View">
+                <MenuItem Header="_Folder Explorer" IsCheckable="True"
+                          IsChecked="{Binding Folder.Visibility, Mode=TwoWay,  Converter={StaticResource visibilityConverter}}"/>
+                <MenuItem Header="_Output" IsCheckable="True"
+                          IsChecked="{Binding Output.Visibility, Mode=TwoWay,  Converter={StaticResource visibilityConverter}}"/>
+            </MenuItem>
 
             <MenuItem Header="_Build">
                 <MenuItem Header="_Compile"
@@ -272,6 +293,9 @@
                         ToolTip="Run">
                     <Image Source="Icons/Run.png"/>
                 </Button>
+
+                <Separator/>
+                <Button Click="Button_Click">Test</Button>
             </ToolBar>
         </ToolBarTray>
 
@@ -418,12 +442,14 @@
                                 Document="{Binding Document}"
                                 ShowLineNumbers="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.Settings.Config.ShowLineNumbers}"
                                 SyntaxHighlighting="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.Settings.Highlighting}"
-                                Loaded="TextEditor_Loaded">
+                                Loaded="TextEditor_Loaded"
+                                IsModified="{Binding IsModified, Mode=TwoWay}"
+                                >
                             </avalonEdit:TextEditor>
                         </DataTemplate>
                     </TabControl.ContentTemplate>
                 </TabControl>
-            </Grid>
+            </Grid>            
             <GridSplitter Grid.Row="1"
                           Height="2"
                           HorizontalAlignment="Stretch"
@@ -431,7 +457,7 @@
                           Visibility="{Binding Output.Visibility}"/>
             <TabControl Grid.Row="2"
                         TabStripPlacement="Bottom"
-                        Background="WhiteSmoke"
+                        
                         Visibility="{Binding Output.Visibility}">
                 <TabItem Header="Output">
                     <TextBlock Text="Compilation..."/>

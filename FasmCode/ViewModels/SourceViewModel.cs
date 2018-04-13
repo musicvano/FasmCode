@@ -11,9 +11,16 @@ namespace FasmCode.ViewModels
         {
             Document = new TextDocument();
             Document.FileName = fileName;
-            using (StreamReader reader = new StreamReader(fileName))
+            if (!File.Exists(fileName))
             {
-                Document.Text = reader.ReadToEnd();
+                File.Create(fileName).Close();
+            }
+            else
+            {
+                using (StreamReader reader = new StreamReader(fileName))
+                {
+                    Document.Text = reader.ReadToEnd();
+                }
             }
         }
 
@@ -28,7 +35,8 @@ namespace FasmCode.ViewModels
         {
             get
             {
-                return Path.GetFileName(Document.FileName);
+                string name = Path.GetFileName(Document.FileName);
+                return IsModified ? name + "*" : name;
             }
         }
 

@@ -5,17 +5,14 @@ using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using System.Windows.Input;
 
 namespace FasmCode.ViewModels
 {
-    class MainViewModel : INotifyPropertyChanged
+    class MainViewModel : BaseViewModel
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
         // All commands of the application
         public ICommand WindowLoaded { get; set; }
         public ICommand WindowClosed { get; set; }
@@ -54,7 +51,10 @@ namespace FasmCode.ViewModels
         // Application settings (hot keys, themes, general configurations)
         public SettingsManager Settings { get; set; }
 
+        // Represents the left panel with the folder structure
         public FolderViewModel Folder { get; set; }
+
+        // Represents the bottom panel with the output information
         public OutputViewModel Output { get; set; }
 
         // Collection of view models for all sources
@@ -79,18 +79,13 @@ namespace FasmCode.ViewModels
             get { return Sources[SelectedSourceIndex]; }
         }
 
-        // Implements INotifyPropertyChanged behaviour
-        internal void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
         public MainViewModel()
         {
             Settings = new SettingsManager();
             CreateCommands();
             CreateKeyBindings();
             Folder = new FolderViewModel();
+            Output = new OutputViewModel();
             Sources = new ObservableCollection<SourceViewModel>();
         }
 
@@ -184,8 +179,7 @@ namespace FasmCode.ViewModels
             {
                 var source = new SourceViewModel(dialog.FileName);
                 Sources.Add(source);
-                SelectedSourceIndex = Sources.Count - 1;
-                //File.Create(dialog.FileName).Close();
+                SelectedSourceIndex = Sources.Count - 1;                
             }
         }
 
@@ -420,7 +414,7 @@ namespace FasmCode.ViewModels
         {            
             var window = new AboutWindow();
             window.Owner = Window;
-            window.ShowDialog();
+            window.ShowDialog();            
         }
 
         private bool AboutCanExecute(object param) => true;

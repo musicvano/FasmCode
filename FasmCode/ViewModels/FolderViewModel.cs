@@ -1,14 +1,10 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Windows;
+﻿using System.Windows;
 
 namespace FasmCode.ViewModels
 {
-    class FolderViewModel : INotifyPropertyChanged
+    class FolderViewModel : BaseViewModel
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        // Is true if the directory has been opened
+        // Defines the visibility of the left folder panel
         private Visibility visibility;
         public Visibility Visibility
         {
@@ -19,19 +15,14 @@ namespace FasmCode.ViewModels
                 visibility = value;
                 OnPropertyChanged();
             }
-        }
-
-        // Implements INotifyPropertyChanged behaviour
-        internal void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        }        
 
         public FolderViewModel()
         {
             visibility = Visibility.Visible;
         }
 
+        // Toogles visibility of the panel
         public void Toggle()
         {
             Visibility = visibility == Visibility.Visible

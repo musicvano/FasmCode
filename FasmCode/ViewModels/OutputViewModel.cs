@@ -1,14 +1,10 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Windows;
+﻿using System.Windows;
 
 namespace FasmCode.ViewModels
 {
-    class OutputViewModel : INotifyPropertyChanged
+    class OutputViewModel : BaseViewModel
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        // Is true if the directory has been opened
+        // Defines the visibility of the bottom output panel
         private Visibility visibility;
         public Visibility Visibility
         {
@@ -21,17 +17,12 @@ namespace FasmCode.ViewModels
             }
         }
 
-        // Implements INotifyPropertyChanged behaviour
-        internal void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
         public OutputViewModel()
         {
             visibility = Visibility.Visible;
         }
 
+        // Toggles visibility of the panel
         public void Toggle()
         {
             Visibility = visibility == Visibility.Visible

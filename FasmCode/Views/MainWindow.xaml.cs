@@ -29,5 +29,10 @@ namespace FasmCode.Views
                     break;
                 }
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            //var obj = tabControlSources.ContentTemplate.FindName("editor", ICSharpCode.AvalonEdit.TextEditor);
+        }
     }
 }
