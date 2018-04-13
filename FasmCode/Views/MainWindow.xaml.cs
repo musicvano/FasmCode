@@ -1,4 +1,5 @@
 ﻿using FasmCode.ViewModels;
+using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Editing;
 using System.Windows;
 using System.Windows.Shapes;
@@ -32,7 +33,12 @@ namespace FasmCode.Views
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            //var obj = tabControlSources.ContentTemplate.FindName("editor", ICSharpCode.AvalonEdit.TextEditor);
+        }
+
+        private void TextEditor_TextChanged(object sender, System.EventArgs e)
+        {
+            TextEditor ed = sender as TextEditor;
+            ed.IsModified = true;
         }
     }
 }

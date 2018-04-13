@@ -407,6 +407,7 @@
                         <DataTemplate>
                             <DockPanel>
                                 <TextBlock Text="{Binding ShortFileName}" ToolTip="{Binding Document.FileName}"/>
+                                <TextBlock Text="*" Visibility="{Binding IsModified, Converter={StaticResource visibilityConverter}}"/>
                                 <Button x:Name="btn"
                                     Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CloseCommand}"
                                     CommandParameter="{Binding}"
@@ -444,7 +445,7 @@
                                 SyntaxHighlighting="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.Settings.Highlighting}"
                                 Loaded="TextEditor_Loaded"
                                 IsModified="{Binding IsModified, Mode=TwoWay}"
-                                >
+                                TextChanged="TextEditor_TextChanged">
                             </avalonEdit:TextEditor>
                         </DataTemplate>
                     </TabControl.ContentTemplate>
@@ -456,12 +457,10 @@
                           VerticalAlignment="Center"
                           Visibility="{Binding Output.Visibility}"/>
             <TabControl Grid.Row="2"
-                        TabStripPlacement="Bottom"
-                        
+                        TabStripPlacement="Bottom"                        
                         Visibility="{Binding Output.Visibility}">
                 <TabItem Header="Output">
                     <TextBlock Text="Compilation..."/>
-
                 </TabItem>
             </TabControl>
         </Grid>

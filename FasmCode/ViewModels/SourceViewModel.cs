@@ -4,7 +4,7 @@ using System.IO;
 namespace FasmCode.ViewModels
 {
     // Represents the tab of source code in the editor
-    public class SourceViewModel
+    class SourceViewModel: BaseViewModel
     {
         // Creates source view model by reading content from the file
         public SourceViewModel(string fileName)
@@ -28,16 +28,22 @@ namespace FasmCode.ViewModels
         public TextDocument Document { get; set; }
 
         // Returns true if the document has been modified
-        public bool IsModified { get; set; }
+        private bool isModified;
+        public bool IsModified
+        {
+            get { return isModified; }
+            set
+            {
+                if (value == isModified) return;
+                isModified = value;
+                OnPropertyChanged();
+            }
+        }
 
         // Returns file name and extention without full path
         public string ShortFileName
         {
-            get
-            {
-                string name = Path.GetFileName(Document.FileName);
-                return IsModified ? name + "*" : name;
-            }
+            get { return Path.GetFileName(Document.FileName); }
         }
 
         // Saves the document to file using early specified location
@@ -53,6 +59,7 @@ namespace FasmCode.ViewModels
             {
                 writer.Write(Document.Text);
             }
+            IsModified = false;
         }
     }
 }
