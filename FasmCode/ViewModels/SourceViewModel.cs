@@ -13,30 +13,42 @@ namespace FasmCode.ViewModels
         /// </summary>
         public SourceViewModel(string fileName)
         {
-            Document = new TextDocument();
-            Document.FileName = fileName;
             if (!File.Exists(fileName))
             {
                 File.Create(fileName).Close();
+                Document = new TextDocument();
             }
             else
             {
+                string str;
                 using (StreamReader reader = new StreamReader(fileName))
-                {
-                    Document.Text = reader.ReadToEnd();
-                }
+                    str = reader.ReadToEnd();
+                Document = new TextDocument(str);
             }
+            Document.FileName = fileName;
         }
+
+        private TextDocument document;
 
         /// <summary>
         /// The document of the AvalonEditor 
         /// </summary>
-        public TextDocument Document { get; set; }
+        public TextDocument Document
+        {
+            get { return document; }
+            set
+            {
+                if (value == document) return;
+                document = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool isModified;
 
         /// <summary>
         /// Returns true if the document has been modified
         /// </summary>
-        private bool isModified;
         public bool IsModified
         {
             get { return isModified; }

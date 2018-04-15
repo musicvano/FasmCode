@@ -201,7 +201,7 @@ namespace FasmCode.ViewModels
             {
                 var source = new SourceViewModel(dialog.FileName);
                 Sources.Add(source);
-                SelectedSourceIndex = Sources.Count - 1;                
+                SelectedSourceIndex = Sources.Count - 1;
             }
         }
 
@@ -209,22 +209,25 @@ namespace FasmCode.ViewModels
 
         private void OpenExecute(object param)
         {
-            OpenFileDialog dialog = new OpenFileDialog
+            string fileName = param as string;
+            if (String.IsNullOrEmpty(fileName))
             {
-                Filter = "Assembly Files (*.asm)|*.asm|Include Files (*.inc)|*.inc|All Files(*.*)|*.*"
-            };
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                for(int i = 0; i < Sources.Count; i++)
-                    if (string.Equals(Sources[i].Document.FileName, dialog.FileName, StringComparison.OrdinalIgnoreCase))
-                    {
-                        SelectedSourceIndex = i;
-                        return;
-                    }
-                var source = new SourceViewModel(dialog.FileName);
-                Sources.Add(source);
-                SelectedSourceIndex = Sources.Count - 1;
+                OpenFileDialog dialog = new OpenFileDialog();
+                dialog.Filter = "Assembly Files (*.asm)|*.asm|Include Files (*.inc)|*.inc|All Files(*.*)|*.*";
+                if (dialog.ShowDialog() != DialogResult.OK)
+                    return;
+                fileName = dialog.FileName;
             }
+            // If file opened try to find it
+            for (int i = 0; i < Sources.Count; i++)
+                if (string.Equals(Sources[i].Document.FileName, fileName, StringComparison.OrdinalIgnoreCase))
+                {
+                    SelectedSourceIndex = i;
+                    return;
+                }
+            var source = new SourceViewModel(fileName);
+            Sources.Add(source);
+            SelectedSourceIndex = Sources.Count - 1;
         }
 
         private bool OpenCanExecute(object param) => true;
@@ -433,10 +436,10 @@ namespace FasmCode.ViewModels
         private bool HelpCanExecute(object param) => true;
 
         private void AboutExecute(object param)
-        {            
+        {
             var window = new AboutWindow();
             window.Owner = Window;
-            window.ShowDialog();            
+            window.ShowDialog();
         }
 
         private bool AboutCanExecute(object param) => true;

@@ -1,7 +1,8 @@
-﻿using FasmCode.ViewModels;
+﻿using FasmCode.Models;
+using FasmCode.ViewModels;
 using ICSharpCode.AvalonEdit;
-using ICSharpCode.AvalonEdit.Editing;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Shapes;
 
 namespace FasmCode.Views
@@ -21,7 +22,7 @@ namespace FasmCode.Views
 
         private void TextEditor_Loaded(object sender, RoutedEventArgs e)
         {
-            var editor = sender as ICSharpCode.AvalonEdit.TextEditor;
+            var editor = sender as TextEditor;
             foreach (var item in editor.TextArea.LeftMargins)
                 if (item is Line)
                 {
@@ -35,10 +36,19 @@ namespace FasmCode.Views
         {
         }
 
-        private void TextEditor_TextChanged(object sender, System.EventArgs e)
+        private void TreeViewItem_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            TextEditor ed = sender as TextEditor;
-            ed.IsModified = true;
+            if (sender is TreeViewItem)
+            {
+                var item = sender as TreeViewItem;
+                if (!item.IsSelected) return;
+                if (item.DataContext is FileItem)
+                {
+                    var file = item.DataContext as FileItem;
+                    var viewModel = (MainViewModel)DataContext;
+                    viewModel.OpenCommand?.Execute(file.Path);
+                }
+            }
         }
     }
 }

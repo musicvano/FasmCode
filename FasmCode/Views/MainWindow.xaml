@@ -54,21 +54,21 @@
                           Command="{Binding NewCommand}"
                           InputGestureText="{Binding Settings.Keymap.New}">
                     <MenuItem.Icon>
-                        <Image Source="Icons/New.png"/>
+                        <Image Source="Icons/NewFile.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="_Open File..."
                           Command="{Binding OpenCommand}"
                           InputGestureText="{Binding Settings.Keymap.Open}">
                     <MenuItem.Icon>
-                        <Image Source="Icons/Folder.png"/>
+                        <Image Source="Icons/FolderOpened.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="O_pen Folder..."
                           Command="{Binding OpenFolderCommand}"
                           InputGestureText="{Binding Settings.Keymap.OpenFolder}">
                     <MenuItem.Icon>
-                        <Image Source="Icons/Folder.png"/>
+                        <Image Source="Icons/Folders.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="_Save"
@@ -99,9 +99,6 @@
                 <MenuItem Header="Close _Folder"
                           Command="{Binding CloseFolderCommand}"
                           InputGestureText="{Binding Settings.Keymap.CloseFolder}">
-                    <MenuItem.Icon>
-                        <Image Source="Icons/Close.png"/>
-                    </MenuItem.Icon>
                 </MenuItem>
                 <Separator/>
                 <MenuItem Header="E_xit"
@@ -253,16 +250,16 @@
         <ToolBarTray DockPanel.Dock="Top" Background="WhiteSmoke" IsLocked="True">
             <ToolBar Background="WhiteSmoke">
                 <Button Command="{Binding NewCommand}"
-                        ToolTip="New">
-                    <Image Source="Icons/New.png"/>
+                        ToolTip="New File">
+                    <Image Source="Icons/NewFile.png"/>
                 </Button>
                 <Button Command="{Binding OpenCommand}"
                         ToolTip="Open">
-                    <Image Source="Icons/Folder.png"/>
+                    <Image Source="Icons/FolderOpened.png"/>
                 </Button>
                 <Button Command="{Binding OpenFolderCommand}"
                         ToolTip="Open Folder">
-                    <Image Source="Icons/Folder.png"/>
+                    <Image Source="Icons/Folders.png"/>
                 </Button>
                 <Button Command="{Binding SaveCommand}"
                         ToolTip="Save">
@@ -379,18 +376,27 @@
                 </Grid.ColumnDefinitions>
                 <TreeView Grid.Column="0" Visibility="{Binding Folder.Visibility}"
                           ItemsSource="{Binding Folder.Items}">
+                    <TreeView.ItemContainerStyle>
+                        <Style TargetType="{x:Type TreeViewItem}">
+                            <EventSetter Event="MouseDoubleClick" Handler="TreeViewItem_MouseDoubleClick"/>
+                        </Style>
+                    </TreeView.ItemContainerStyle>
                     <TreeView.Resources>
-                        <HierarchicalDataTemplate DataType="{x:Type model:FolderItem}"
-                                  ItemsSource="{Binding Items}">
+                        <HierarchicalDataTemplate DataType="{x:Type model:FolderItem}" ItemsSource="{Binding Items}">
                             <StackPanel Orientation="Horizontal">
-                                <Image Source="Icons/Folder.png" Margin="0,0,5,0" />
+                                <Image x:Name="nodeImg" Source="Icons/FolderClosed.png" Margin="0,0,5,0" />
                                 <TextBlock Text="{Binding Name}" ToolTip="{Binding Path}" />
-                            </StackPanel>                            
+                            </StackPanel>
+                            <HierarchicalDataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=TreeViewItem}, Path=IsExpanded}" Value="True">
+                                    <Setter TargetName="nodeImg" Property="Source" Value="Icons/FolderOpened.png"/>
+                                </DataTrigger>
+                            </HierarchicalDataTemplate.Triggers>
                         </HierarchicalDataTemplate>
                         <DataTemplate DataType="{x:Type model:FileItem}">
                             <StackPanel Orientation="Horizontal">
-                                <Image Source="Icons/Asm.png" Margin="0,0,5,0" />
-                                <TextBlock Text="{Binding Name}" ToolTip="{Binding Path}" />
+                                <Image Source="Icons/Code.png" Margin="0,0,5,0" />
+                                <TextBlock Text="{Binding Name}" ToolTip="{Binding Path}"/>
                             </StackPanel>
                         </DataTemplate>
                     </TreeView.Resources>
@@ -452,17 +458,16 @@
                                 FontSize="10pt"
                                 HorizontalScrollBarVisibility="Auto"
                                 VerticalScrollBarVisibility="Auto"
-                                Document="{Binding Document}"
+                                Document="{Binding Document, Mode=OneWay}"
                                 ShowLineNumbers="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.Settings.Config.ShowLineNumbers}"
                                 SyntaxHighlighting="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.Settings.Highlighting}"
-                                Loaded="TextEditor_Loaded"
                                 IsModified="{Binding IsModified, Mode=TwoWay}"
-                                TextChanged="TextEditor_TextChanged">
+                                Loaded="TextEditor_Loaded">
                             </avalonEdit:TextEditor>
                         </DataTemplate>
                     </TabControl.ContentTemplate>
                 </TabControl>
-            </Grid>            
+            </Grid>
             <GridSplitter Grid.Row="1"
                           Height="2"
                           HorizontalAlignment="Stretch"
