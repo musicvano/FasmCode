@@ -36,6 +36,13 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        <Style x:Key="EnableDisableImageStyle" TargetType="{x:Type Image}">
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.5"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
 
     <intr:Interaction.Triggers>
@@ -54,42 +61,42 @@
                           Command="{Binding NewCommand}"
                           InputGestureText="{Binding Settings.Keymap.New}">
                     <MenuItem.Icon>
-                        <Image Source="Icons/NewFile.png"/>
+                        <Image Source="Icons/NewFile.png" Style="{StaticResource EnableDisableImageStyle}"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="_Open File..."
                           Command="{Binding OpenCommand}"
                           InputGestureText="{Binding Settings.Keymap.Open}">
                     <MenuItem.Icon>
-                        <Image Source="Icons/FolderOpened.png"/>
+                        <Image Source="Icons/FolderOpened.png" Style="{StaticResource EnableDisableImageStyle}"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="O_pen Folder..."
                           Command="{Binding OpenFolderCommand}"
                           InputGestureText="{Binding Settings.Keymap.OpenFolder}">
                     <MenuItem.Icon>
-                        <Image Source="Icons/Folders.png"/>
+                        <Image Source="Icons/Folders.png" Style="{StaticResource EnableDisableImageStyle}"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="_Save"
                           Command="{Binding SaveCommand}"
                           InputGestureText="{Binding Settings.Keymap.Save}">
                     <MenuItem.Icon>
-                        <Image Source="Icons/Save.png"/>
+                        <Image Source="Icons/Save.png" Style="{StaticResource EnableDisableImageStyle}"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="Save _As..."
                           Command="{Binding SaveAsCommand}"
                           InputGestureText="{Binding Settings.Keymap.SaveAs}">
                     <MenuItem.Icon>
-                        <Image Source="Icons/SaveAs.png"/>
+                        <Image Source="Icons/SaveAs.png" Style="{StaticResource EnableDisableImageStyle}"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="Save A_ll"
                           Command="{Binding SaveAllCommand}"
                           InputGestureText="{Binding Settings.Keymap.SaveAll}">
                     <MenuItem.Icon>
-                        <Image Source="Icons/SaveAll.png"/>
+                        <Image Source="Icons/SaveAll.png" Style="{StaticResource EnableDisableImageStyle}"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="_Close"
@@ -105,7 +112,7 @@
                           Command="{Binding ExitCommand}"
                           InputGestureText="{Binding Settings.Keymap.Exit}">
                     <MenuItem.Icon>
-                        <Image Source="Icons/Exit.png"/>
+                        <Image Source="Icons/Exit.png" Style="{StaticResource EnableDisableImageStyle}"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
@@ -115,14 +122,14 @@
                           Command="{Binding UndoCommand}"
                           InputGestureText="{Binding Settings.Keymap.Undo}">
                     <MenuItem.Icon>
-                        <Image Source="Icons/Undo.png"/>
+                        <Image Source="Icons/Undo.png" Style="{StaticResource EnableDisableImageStyle}"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="_Redo"
                           Command="{Binding RedoCommand}"
                           InputGestureText="{Binding Settings.Keymap.Redo}">
                     <MenuItem.Icon>
-                        <Image Source="Icons/Redo.png"/>
+                        <Image Source="Icons/Redo.png" Style="{StaticResource EnableDisableImageStyle}"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator/>
@@ -130,28 +137,28 @@
                           Command="{Binding CutCommand}"
                           InputGestureText="{Binding Settings.Keymap.Cut}">
                     <MenuItem.Icon>
-                        <Image Source="Icons/Cut.png"/>
+                        <Image Source="Icons/Cut.png" Style="{StaticResource EnableDisableImageStyle}"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="_Copy"
                           Command="{Binding CopyCommand}"
                           InputGestureText="{Binding Settings.Keymap.Copy}">
                     <MenuItem.Icon>
-                        <Image Source="Icons/Copy.png"/>
+                        <Image Source="Icons/Copy.png" Style="{StaticResource EnableDisableImageStyle}"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="_Paste"
                           Command="{Binding PasteCommand}"
                           InputGestureText="{Binding Settings.Keymap.Paste}">
                     <MenuItem.Icon>
-                        <Image Source="Icons/Paste.png"/>
+                        <Image Source="Icons/Paste.png" Style="{StaticResource EnableDisableImageStyle}"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="_Delete"
                           Command="{Binding DeleteCommand}"
                           InputGestureText="{Binding Settings.Keymap.Delete}">
                     <MenuItem.Icon>
-                        <Image Source="Icons/Delete.png"/>
+                        <Image Source="Icons/Delete.png" Style="{StaticResource EnableDisableImageStyle}"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator/>
@@ -159,7 +166,7 @@
                           Command="{Binding SelectAllCommand}"
                           InputGestureText="{Binding Settings.Keymap.SelectAll}">
                     <MenuItem.Icon>
-                        <Image Source="Icons/SelectAll.png"/>
+                        <Image Source="Icons/SelectAll.png" Style="{StaticResource EnableDisableImageStyle}"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator/>
@@ -167,14 +174,14 @@
                           Command="{Binding FindCommand}"
                           InputGestureText="{Binding Settings.Keymap.Find}">
                     <MenuItem.Icon>
-                        <Image Source="Icons/Find.png"/>
+                        <Image Source="Icons/Find.png" Style="{StaticResource EnableDisableImageStyle}"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="_Replace"
                           Command="{Binding ReplaceCommand}"
                           InputGestureText="{Binding Settings.Keymap.Replace}">
                     <MenuItem.Icon>
-                        <Image Source="Icons/Replace.png"/>
+                        <Image Source="Icons/Replace.png" Style="{StaticResource EnableDisableImageStyle}"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
@@ -190,14 +197,14 @@
                           Command="{Binding CompileCommand}"
                           InputGestureText="{Binding Settings.Keymap.Compile}">
                     <MenuItem.Icon>
-                        <Image Source="Icons/Compile.png"/>
+                        <Image Source="Icons/Compile.png" Style="{StaticResource EnableDisableImageStyle}"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="_Run"
                           Command="{Binding RunCommand}"
                           InputGestureText="{Binding Settings.Keymap.Run}">
                     <MenuItem.Icon>
-                        <Image Source="Icons/Run.png"/>
+                        <Image Source="Icons/Run.png" Style="{StaticResource EnableDisableImageStyle}"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
@@ -207,14 +214,14 @@
                           Command="{Binding TerminalCommand}"
                           InputGestureText="{Binding Settings.Keymap.Terminal}">
                     <MenuItem.Icon>
-                        <Image Source="Icons/Terminal.png"/>
+                        <Image Source="Icons/Terminal.png" Style="{StaticResource EnableDisableImageStyle}"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="_Calculator..."
                           Command="{Binding CalculatorCommand}"
                           InputGestureText="{Binding Settings.Keymap.Calculator}">
                     <MenuItem.Icon>
-                        <Image Source="Icons/Calc.png"/>
+                        <Image Source="Icons/Calc.png" Style="{StaticResource EnableDisableImageStyle}"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator/>
@@ -223,7 +230,7 @@
                           CommandParameter="{x:Reference Name=mainWindow}"
                           InputGestureText="{Binding Settings.Keymap.Settings}">
                     <MenuItem.Icon>
-                        <Image Source="Icons/Settings.png"/>
+                        <Image Source="Icons/Settings.png" Style="{StaticResource EnableDisableImageStyle}"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
@@ -233,7 +240,7 @@
                           Command="{Binding HelpCommand}"
                           InputGestureText="{Binding Settings.Keymap.Help}">
                     <MenuItem.Icon>
-                        <Image Source="Icons/Help.png"/>
+                        <Image Source="Icons/Help.png" Style="{StaticResource EnableDisableImageStyle}"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="_About Fasm Code"
@@ -241,7 +248,7 @@
                           CommandParameter="{x:Reference Name=mainWindow}"
                           InputGestureText="{Binding Settings.Keymap.About}">
                     <MenuItem.Icon>
-                        <Image Source="Icons/Info.png"/>
+                        <Image Source="Icons/Info.png" Style="{StaticResource EnableDisableImageStyle}"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
@@ -251,45 +258,45 @@
             <ToolBar Background="WhiteSmoke">
                 <Button Command="{Binding NewCommand}"
                         ToolTip="New File">
-                    <Image Source="Icons/NewFile.png"/>
+                    <Image Source="Icons/NewFile.png" Style="{StaticResource EnableDisableImageStyle}"/>
                 </Button>
                 <Button Command="{Binding OpenCommand}"
                         ToolTip="Open">
-                    <Image Source="Icons/FolderOpened.png"/>
+                    <Image Source="Icons/FolderOpened.png" Style="{StaticResource EnableDisableImageStyle}"/>
                 </Button>
                 <Button Command="{Binding OpenFolderCommand}"
                         ToolTip="Open Folder">
-                    <Image Source="Icons/Folders.png"/>
+                    <Image Source="Icons/Folders.png" Style="{StaticResource EnableDisableImageStyle}"/>
                 </Button>
                 <Button Command="{Binding SaveCommand}"
                         ToolTip="Save">
-                    <Image Source="Icons/Save.png"/>
+                    <Image Source="Icons/Save.png" Style="{StaticResource EnableDisableImageStyle}"/>
                 </Button>
                 <Button Command="{Binding SaveAsCommand}"
                         ToolTip="Save As">
-                    <Image Source="Icons/SaveAs.png"/>
+                    <Image Source="Icons/SaveAs.png" Style="{StaticResource EnableDisableImageStyle}"/>
                 </Button>
                 <Button Command="{Binding SaveAllCommand}"
                         ToolTip="Save All">
-                    <Image Source="Icons/SaveAll.png"/>
+                    <Image Source="Icons/SaveAll.png" Style="{StaticResource EnableDisableImageStyle}"/>
                 </Button>
                 <Separator/>
                 <Button Command="{Binding UndoCommand}"
                         ToolTip="Undo">
-                    <Image Source="Icons/Undo.png"/>
+                    <Image Source="Icons/Undo.png" Style="{StaticResource EnableDisableImageStyle}"/>
                 </Button>
                 <Button Command="{Binding RedoCommand}"
                         ToolTip="Redo">
-                    <Image Source="Icons/Redo.png"/>
+                    <Image Source="Icons/Redo.png" Style="{StaticResource EnableDisableImageStyle}"/>
                 </Button>
                 <Separator/>
                 <Button Command="{Binding CompileCommand}"
                         ToolTip="Compile">
-                    <Image Source="Icons/Compile.png"/>
+                    <Image Source="Icons/Compile.png" Style="{StaticResource EnableDisableImageStyle}"/>
                 </Button>
                 <Button Command="{Binding RunCommand}"
                         ToolTip="Run">
-                    <Image Source="Icons/Run.png"/>
+                    <Image Source="Icons/Run.png" Style="{StaticResource EnableDisableImageStyle}"/>
                 </Button>
 
                 <Separator/>
@@ -330,7 +337,6 @@
                 <TextBlock Margin="5 0" Text="UTF-8"/>
             </StatusBarItem>
         </StatusBar>
-
 
         <Grid DockPanel.Dock="Bottom" Background="WhiteSmoke">
             <Grid.RowDefinitions>

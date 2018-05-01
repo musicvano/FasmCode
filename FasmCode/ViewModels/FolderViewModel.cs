@@ -1,5 +1,5 @@
 ﻿using FasmCode.Models;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows;
 
 namespace FasmCode.ViewModels
@@ -14,9 +14,27 @@ namespace FasmCode.ViewModels
         /// </summary>
         public FolderViewModel()
         {
-            visibility = Visibility.Visible;
-            Items = new List<Item>();
-            Items.Add(new FolderItem(@"d:\Folder"));
+            visibility = Visibility.Collapsed;
+            Items = new ObservableCollection<FileSystemItem>();
+        }
+
+        /// <summary>
+        /// Opens a folder and loads an entire tree with subfolders and files
+        /// </summary>
+        public void Open(string path)
+        {
+            Items.Clear();
+            Items.Add(new FolderItem(path));
+            Visibility = Visibility.Visible;
+        }
+
+        /// <summary>
+        /// Close a folder tree
+        /// </summary>
+        public void Close()
+        {
+            Items.Clear();
+            Visibility = Visibility.Collapsed;
         }
 
         private Visibility visibility;
@@ -36,9 +54,9 @@ namespace FasmCode.ViewModels
         }
 
         /// <summary>
-        /// Opened root folder
+        /// Represents a collection of an opened folder
         /// </summary>
-        public List<Item> Items { get; set; }
+        public ObservableCollection<FileSystemItem> Items { get; set; }
 
         /// <summary>
         /// Toogles visibility of the panel
@@ -49,5 +67,14 @@ namespace FasmCode.ViewModels
                 ? Visibility.Collapsed
                 : Visibility.Visible;
         }
+
+        /// <summary>
+        /// Returns true if a folder isn't loaded
+        /// </summary>
+        public bool IsEmpty
+        {
+            get { return Items.Count == 0; }
+        }
+
     }
 }

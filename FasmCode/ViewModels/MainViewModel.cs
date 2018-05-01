@@ -1,11 +1,10 @@
 ﻿using FasmCode.Commands;
 using FasmCode.Settings;
 using FasmCode.Views;
+using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Diagnostics;
-using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using System.Windows.Input;
 
@@ -218,7 +217,7 @@ namespace FasmCode.ViewModels
                     return;
                 fileName = dialog.FileName;
             }
-            // If file opened try to find it
+            // If the file is opened try to find it and activate
             for (int i = 0; i < Sources.Count; i++)
                 if (string.Equals(Sources[i].Document.FileName, fileName, StringComparison.OrdinalIgnoreCase))
                 {
@@ -234,7 +233,13 @@ namespace FasmCode.ViewModels
 
         private void OpenFolderExecute(object param)
         {
-
+            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+            dialog.RestoreDirectory = true;
+            dialog.IsFolderPicker = true;
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                Folder.Open(dialog.FileName);
+            }
         }
 
         private bool OpenFolderCanExecute(object param) => true;
@@ -310,10 +315,13 @@ namespace FasmCode.ViewModels
 
         private void CloseFolderExecute(object param)
         {
-
+            Folder.Close();
         }
 
-        private bool CloseFolderCanExecute(object param) => true;
+        private bool CloseFolderCanExecute(object param)
+        {
+            return !Folder.IsEmpty;
+        }
 
         private void ExitExecute(object param)
         {

@@ -3,7 +3,7 @@
     /// <summary>
     /// Represent an item of the file system
     /// </summary>
-    public class Item
+    public class FileSystemItem
     {
         /// <summary>
         /// Full path of the file or directory
@@ -17,7 +17,8 @@
         {
             get
             {
-                return System.IO.Path.GetFileName(Path);
+                var name = System.IO.Path.GetFileName(Path);
+                return !string.IsNullOrEmpty(name) ? name : Path;
             }
         }
     }

@@ -3,7 +3,7 @@
     /// <summary>
     /// The file of the file system
     /// </summary>
-    public class FileItem : Item
+    public class FileItem : FileSystemItem
     {
         /// <summary>
         /// Creates a new FileItem instance
